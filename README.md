@@ -1,1 +1,1 @@
-﻿# Tipealo-Frontend
+# Tipealo-Frontend
