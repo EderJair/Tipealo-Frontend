@@ -260,7 +260,7 @@ export default function Demo() {
                 ))}
 
                 {/* Aurora card */}
-                <div className="relative overflow-hidden metric-card p-0" style={{ background: 'none' }}>
+                <div className="col-span-2 md:col-span-1 relative overflow-hidden metric-card p-0" style={{ background: 'none' }}>
                   <div className="absolute inset-0">
                     <Grainient color1="#f2b058" color2="#ff5500" color3="#f2b058"
                       timeSpeed={2.4} colorBalance={0.15} warpStrength={2.1} warpFrequency={2}
