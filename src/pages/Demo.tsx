@@ -6,6 +6,7 @@ import StockView from './demo/StockView'
 import VentasView from './demo/VentasView'
 import GananciasView from './demo/GananciasView'
 import NotasView from './demo/NotasView'
+import ConfigView from './demo/ConfigView'
 
 // --- Icons ---
 const icons = {
@@ -155,7 +156,7 @@ function AreaChart({ dark = false }: { dark?: boolean }) {
 // --- Main ---
 export default function Demo() {
   const [activeNav, setActiveNav] = useState('Inicio')
-  const isModule = ['Stock', 'Ventas', 'Ganancias', 'Notas'].includes(activeNav)
+  const isModule = ['Stock', 'Ventas', 'Ganancias', 'Notas', 'Config'].includes(activeNav)
 
   return (
     <motion.div
@@ -239,6 +240,7 @@ export default function Demo() {
           {activeNav === 'Ventas'    && <VentasView />}
           {activeNav === 'Ganancias' && <GananciasView />}
           {activeNav === 'Notas'     && <NotasView />}
+          {activeNav === 'Config'    && <ConfigView />}
 
           {!isModule && (
             <div className="p-3 md:p-6 space-y-3 md:space-y-4">
@@ -361,15 +363,15 @@ export default function Demo() {
       </div>
 
       {/* Bottom nav — mobile only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-black/7 flex">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-black flex">
         {navItems.map(item => (
           <button key={item.label} onClick={() => setActiveNav(item.label)}
             className={`flex-1 flex flex-col items-center gap-0.5 py-2.5 transition-colors ${
-              activeNav === item.label ? 'text-black' : 'text-gray-400'
+              activeNav === item.label ? 'text-white' : 'text-white/40'
             }`}>
             <Icon path={item.icon} size={19} />
             <span className="text-[9px] font-semibold">{item.label}</span>
-            {activeNav === item.label && <span className="w-1 h-1 bg-black rounded-full" />}
+            {activeNav === item.label && <span className="w-1 h-1 bg-white rounded-full" />}
           </button>
         ))}
       </nav>
