@@ -50,7 +50,7 @@ function App() {
 
       <div className="relative z-10 flex h-svh w-full flex-col px-4 py-3 sm:px-6 lg:px-8">
         <header className="grid grid-cols-[1fr_auto_1fr] items-center bg-transparent px-4 py-3">
-          <p className="justify-self-start text-2xl font-extrabold tracking-[0.18em] text-black">TIPELAO</p>
+          <p className="justify-self-start text-2xl font-extrabold tracking-[0.18em] text-black">TIPEALO</p>
 
           <nav className="hidden items-center gap-3 text-sm text-black md:flex md:justify-self-center">
             <a
