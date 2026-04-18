@@ -82,6 +82,13 @@ function delay(ms: number) {
 }
 
 export default function Mascot() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { const t = setTimeout(() => setMounted(true), 200); return () => clearTimeout(t) }, [])
+  if (!mounted) return null
+  return <MascotInner />
+}
+
+function MascotInner() {
   const controls = useAnimation()
   const [showBubble, setShowBubble] = useState(false)
   const [walking, setWalking]       = useState(false)
@@ -100,15 +107,13 @@ export default function Mascot() {
       await delay(2500)
 
       while (alive) {
-        // Reset off-screen, facing left
-        controls.set({ x: 180, opacity: 0, scaleX: 1 })
+        // Reset to CSS off-screen position (x:0 = off-screen because container uses right:-100)
+        controls.set({ x: 0, scaleX: 1 })
         setShowBubble(false)
-        await delay(50)
-        controls.set({ opacity: 1 })
 
-        // Walk in from right corner
+        // Walk in from right corner (x negative = move left into viewport)
         setWalking(true)
-        await controls.start({ x: -160, transition: { duration: 2.7, ease: 'linear' } })
+        await controls.start({ x: -260, transition: { duration: 2.7, ease: 'linear' } })
         setWalking(false)
         setFrame(0)
         if (!alive) break
@@ -126,7 +131,6 @@ export default function Mascot() {
         setWalking(true)
         await controls.start({ x: 200, transition: { duration: 1.0, ease: 'easeIn' } })
         setWalking(false)
-        controls.set({ opacity: 0 })
         if (!alive) break
 
         // Wait before next visit
@@ -139,8 +143,8 @@ export default function Mascot() {
   }, [controls])
 
   return (
-    <div className="pointer-events-none fixed bottom-0 right-0 z-20">
-      <motion.div animate={controls} initial={{ x: 180, opacity: 0 }} style={{ position: 'relative' }}>
+    <div className="pointer-events-none fixed bottom-0 z-20" style={{ right: -100 }}>
+      <motion.div animate={controls} style={{ position: 'relative' }}>
 
         {/* Thought bubble */}
         <div style={{
