@@ -20,6 +20,8 @@ const icons = {
   arrowDown: 'M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3',
 }
 
+const iconPencil = 'M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'
+
 function Icon({ path, size = 16 }: { path: string; size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
@@ -59,45 +61,18 @@ const transactions = [
 ]
 
 const kpis = [
-  {
-    label: 'Vendido hoy',
-    value: 'S/ 2,090',
-    sub: '48 clientes · dom 18 abr',
-    trend: '+8.4% vs ayer',
-    up: true,
-  },
-  {
-    label: 'Ganancia del mes',
-    value: 'S/ 18,420',
-    sub: 'meta S/ 25,000 · 73% logrado',
-    trend: 'S/ 6,580 para la meta',
-    up: null,
-  },
-  {
-    label: 'Productos en stock',
-    value: '344',
-    sub: 'artículos registrados',
-    trend: 'actualizado hace 2 min',
-    up: null,
-  },
-  {
-    label: 'Por acabarse',
-    value: '6',
-    sub: 'necesitan reposición hoy',
-    trend: 'Aceite, Sal, Fideos...',
-    up: false,
-  },
+  { label: 'Vendido hoy',        value: 'S/ 2,090', sub: '48 clientes · dom 18 abr',       trend: '+8.4% vs ayer',        up: true  },
+  { label: 'Ganancia del mes',   value: 'S/ 18,420', sub: 'meta S/ 25,000 · 73% logrado',  trend: 'S/ 6,580 para la meta', up: null  },
+  { label: 'Productos en stock', value: '344',        sub: 'artículos registrados',           trend: 'actualizado hace 2 min', up: null },
 ]
 
-const iconPencil = 'M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'
-
 const navItems = [
-  { label: 'Inicio', icon: icons.home },
-  { label: 'Stock', icon: icons.box },
-  { label: 'Ventas', icon: icons.chart },
-  { label: 'Ganancias', icon: icons.money },
-  { label: 'Notas', icon: iconPencil },
-  { label: 'Configuración', icon: icons.settings },
+  { label: 'Inicio',        icon: icons.home     },
+  { label: 'Stock',         icon: icons.box      },
+  { label: 'Ventas',        icon: icons.chart    },
+  { label: 'Ganancias',     icon: icons.money    },
+  { label: 'Notas',         icon: iconPencil     },
+  { label: 'Config',        icon: icons.settings },
 ]
 
 // --- Area Chart ---
@@ -126,14 +101,13 @@ function AreaChart({ dark = false }: { dark?: boolean }) {
   const lineColor = dark ? '#5b9fff' : '#0c61f3'
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full" style={{ display: 'block', flex: 1, minHeight: 0 }}>
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full" style={{ display: 'block' }}>
       <defs>
         <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={lineColor} stopOpacity={dark ? 0.35 : 0.22} />
           <stop offset="100%" stopColor={lineColor} stopOpacity="0.01" />
         </linearGradient>
       </defs>
-
       {yTicks.map(tick => {
         const y = pad.t + (1 - tick / max) * ch
         return (
@@ -148,10 +122,8 @@ function AreaChart({ dark = false }: { dark?: boolean }) {
           </g>
         )
       })}
-
       <path d={areaPath} fill="url(#chartFill)" />
       <path d={linePath} fill="none" stroke={lineColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-
       {pts.map((p, i) => {
         const isToday = i === pts.length - 1
         return (
@@ -169,14 +141,10 @@ function AreaChart({ dark = false }: { dark?: boolean }) {
           </g>
         )
       })}
-
       {pts.map((p, i) => (
         <text key={i} x={p.x} y={H - 5} textAnchor="middle" fontSize="11" fontFamily="sans-serif"
-          fill={i === pts.length - 1
-            ? (dark ? 'rgba(255,255,255,0.9)' : '#0c61f3')
-            : (dark ? 'rgba(255,255,255,0.3)' : '#b0b0b0')}
-          fontWeight={i === pts.length - 1 ? '700' : '400'}
-        >
+          fill={i === pts.length - 1 ? (dark ? 'rgba(255,255,255,0.9)' : '#0c61f3') : (dark ? 'rgba(255,255,255,0.3)' : '#b0b0b0')}
+          fontWeight={i === pts.length - 1 ? '700' : '400'}>
           {p.day}
         </text>
       ))}
@@ -187,10 +155,11 @@ function AreaChart({ dark = false }: { dark?: boolean }) {
 // --- Main ---
 export default function Demo() {
   const [activeNav, setActiveNav] = useState('Inicio')
+  const isModule = ['Stock', 'Ventas', 'Ganancias', 'Notas'].includes(activeNav)
 
   return (
     <motion.div
-      className="flex h-screen overflow-hidden bg-[#f0f3f9]"
+      className="flex flex-col md:flex-row h-[100dvh] overflow-hidden bg-[#f0f3f9]"
       style={{ fontFamily: 'Lora, serif' }}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
@@ -198,35 +167,26 @@ export default function Demo() {
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
     >
 
-      {/* Sidebar */}
-      <aside className="w-52 shrink-0 bg-white border-r border-black/7 flex flex-col" style={{ background: 'linear-gradient(180deg, #fff 0%, #f8faff 100%)' }}>
+      {/* Sidebar — desktop only */}
+      <aside className="hidden md:flex w-52 shrink-0 flex-col bg-white border-r border-black/7" style={{ background: 'linear-gradient(180deg, #fff 0%, #f8faff 100%)' }}>
         <div className="px-5 py-5 border-b border-black/5">
           <div className="flex items-center gap-2">
             <span className="text-lg font-extrabold tracking-[0.18em] text-black">TIPEALO</span>
-            <span className="text-[9px] font-bold tracking-widest bg-[#0c61f3] text-white px-1.5 py-0.5">
-              DEMO
-            </span>
+            <span className="text-[9px] font-bold tracking-widest bg-[#0c61f3] text-white px-1.5 py-0.5">DEMO</span>
           </div>
           <p className="mt-0.5 text-[11px] text-gray-400">Puesto N°14 · Mercado Central</p>
         </div>
-
         <nav className="flex-1 py-3 px-2">
           {navItems.map(item => (
-            <button
-              key={item.label}
-              onClick={() => setActiveNav(item.label)}
+            <button key={item.label} onClick={() => setActiveNav(item.label)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-all mb-0.5 text-left cursor-pointer ${
-                activeNav === item.label
-                  ? 'bg-black text-white'
-                  : 'text-gray-500 hover:bg-gray-50 hover:text-black'
-              }`}
-            >
+                activeNav === item.label ? 'bg-black text-white' : 'text-gray-500 hover:bg-gray-50 hover:text-black'
+              }`}>
               <Icon path={item.icon} size={15} />
-              {item.label}
+              {item.label === 'Config' ? 'Configuración' : item.label}
             </button>
           ))}
         </nav>
-
         <div className="px-4 py-4 border-t border-black/5">
           <div className="flex items-center gap-2.5 mb-3">
             <div className="w-7 h-7 bg-black flex items-center justify-center shrink-0">
@@ -237,10 +197,7 @@ export default function Demo() {
               <p className="text-[10px] text-gray-400">Propietario · Abarrotes</p>
             </div>
           </div>
-          <Link
-            to="/"
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-black transition-colors"
-          >
+          <Link to="/" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-black transition-colors">
             <Icon path={icons.arrowLeft} size={12} />
             Volver al inicio
           </Link>
@@ -248,18 +205,26 @@ export default function Demo() {
       </aside>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
 
         {/* Header */}
-        <header className="h-14 bg-white border-b border-black/7 flex items-center justify-between px-6 shrink-0">
-          <div>
+        <header className="h-14 bg-white border-b border-black/7 flex items-center justify-between px-4 md:px-6 shrink-0">
+          {/* Mobile: brand */}
+          <div className="flex md:hidden items-center gap-2">
+            <span className="text-base font-extrabold tracking-[0.18em] text-black">TIPEALO</span>
+            <span className="text-[9px] font-bold bg-[#0c61f3] text-white px-1.5 py-0.5">DEMO</span>
+          </div>
+          {/* Desktop: greeting */}
+          <div className="hidden md:block">
             <h1 className="text-sm font-semibold text-black">Buenos días, Don Carlos</h1>
             <p className="text-[11px] text-gray-400 mt-0.5">Domingo, 18 de Abril · Puesto N°14 · Abarrotes</p>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-[10px] font-semibold tracking-widest text-gray-400 border border-gray-200 px-2.5 py-1">
+          <div className="flex items-center gap-3 md:gap-4">
+            <span className="hidden md:inline text-[10px] font-semibold tracking-widest text-gray-400 border border-gray-200 px-2.5 py-1">
               DATOS DE DEMO
             </span>
+            {/* Mobile: active section label */}
+            <span className="md:hidden text-[11px] font-semibold text-gray-500">{activeNav}</span>
             <button className="relative text-gray-400 hover:text-black transition-colors">
               <Icon path={icons.bell} size={18} />
               <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-[#0c61f3] rounded-full" />
@@ -268,163 +233,147 @@ export default function Demo() {
         </header>
 
         {/* Scrollable content */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
 
           {activeNav === 'Stock'     && <StockView />}
           {activeNav === 'Ventas'    && <VentasView />}
           {activeNav === 'Ganancias' && <GananciasView />}
           {activeNav === 'Notas'     && <NotasView />}
 
-          {activeNav !== 'Stock' && activeNav !== 'Ventas' && activeNav !== 'Ganancias' && activeNav !== 'Notas' && (
-          <div className="p-6 space-y-4">
+          {!isModule && (
+            <div className="p-3 md:p-6 space-y-3 md:space-y-4">
 
-          {/* KPI Cards */}
-          <div className="grid grid-cols-4 gap-4">
-            {kpis.slice(0, 3).map(kpi => (
-              <div key={kpi.label} className="metric-card">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/60">
-                  {kpi.label}
-                </p>
-                <p className="mt-3 text-[2.65rem] font-semibold text-white leading-none">
-                  {kpi.value}
-                </p>
-                <p className="mt-2 text-[1rem] text-white/60">{kpi.sub}</p>
-                <div className={`mt-3 flex items-center gap-1 text-[13px] font-semibold ${
-                  kpi.up === true ? 'text-emerald-400' : kpi.up === false ? 'text-red-400' : 'text-[#5b9fff]'
-                }`}>
-                  {kpi.up !== null && <Icon path={kpi.up ? icons.arrowUp : icons.arrowDown} size={11} />}
-                  {kpi.trend}
-                </div>
-              </div>
-            ))}
-
-            {/* Aurora card */}
-            <div className="relative overflow-hidden metric-card p-0" style={{ background: 'none' }}>
-              <div className="absolute inset-0">
-                <Grainient
-                  color1="#f2b058"
-                  color2="#ff5500"
-                  color3="#f2b058"
-                  timeSpeed={2.4}
-                  colorBalance={0.15}
-                  warpStrength={2.1}
-                  warpFrequency={2}
-                  warpSpeed={1.5}
-                  warpAmplitude={100}
-                  blendAngle={20}
-                  blendSoftness={0.25}
-                  rotationAmount={400}
-                  noiseScale={1.8}
-                  grainAmount={0.03}
-                  grainScale={1}
-                  grainAnimated={false}
-                  contrast={1.3}
-                  gamma={0.85}
-                  saturation={1.8}
-                  centerX={0.1}
-                  centerY={0}
-                  zoom={0.85}
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
-              <div className="relative z-10 flex flex-col justify-end h-full p-5">
-                <h2 className="text-[2.5rem] font-semibold leading-[0.9] text-white" style={{ fontFamily: 'Lora, serif' }}>
-                  Moderniza,<br />crece.
-                </h2>
-                <p className="mt-2 text-[0.9rem] text-white/90 leading-snug">
-                  Sin papeles,<br />sin pérdidas.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Chart + Top Products */}
-          <div className="grid grid-cols-3 gap-4">
-
-            {/* Area Chart — dark */}
-            <div className="col-span-2 p-5 overflow-hidden flex flex-col" style={{ background: 'rgba(0,0,0,0.93)' }}>
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h2 className="text-sm font-semibold text-white">Ventas de la semana</h2>
-                  <p className="text-[11px] text-white/35 mt-0.5">Total: S/ 11,380 · Lun 13 — Dom 18 Abr</p>
-                </div>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[11px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5">↑ +22.4%</span>
-                  <span className="text-[11px] text-white/25">vs semana anterior</span>
-                </div>
-              </div>
-              <div className="flex-1 min-h-0">
-                <AreaChart dark />
-              </div>
-            </div>
-
-            {/* Top Products */}
-            <div className="bg-white p-5">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-sm font-semibold text-black">Lo más vendido</h2>
-                <span className="text-[10px] text-gray-400 font-medium tracking-wide">hoy · por ingreso</span>
-              </div>
-              <div className="space-y-4">
-                {(() => {
-                  const colors = ['#0c61f3', '#7c3aed', '#059669', '#d97706', '#dc2626']
-                  const maxUnits = Math.max(...topProducts.map(x => x.units))
-                  return topProducts.map((p, i) => {
-                    const pct = (p.units / maxUnits) * 100
-                    return (
-                      <div key={p.name} className="flex items-center gap-3">
-                        <div className="w-7 h-7 flex items-center justify-center text-[11px] font-bold shrink-0"
-                          style={{ background: colors[i] + '14', color: colors[i] }}>
-                          {i + 1}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-[12px] font-semibold text-black truncate">{p.name}</span>
-                            <span className="text-[12px] font-bold shrink-0 ml-3" style={{ color: colors[i] }}>{p.revenue}</span>
-                          </div>
-                          <div className="h-0.75 bg-gray-100 w-full">
-                            <div className="h-0.75" style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${colors[i]}66, ${colors[i]})` }} />
-                          </div>
-                          <p className="text-[10px] text-gray-400 mt-1">{p.units} unidades vendidas</p>
-                        </div>
-                      </div>
-                    )
-                  })
-                })()}
-              </div>
-            </div>
-          </div>
-
-          {/* Transactions — card grid */}
-          <div className="bg-white">
-            <div className="px-5 py-4 border-b border-black/5 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-black">Últimas transacciones</h2>
-              <span className="text-[11px] text-gray-400">{transactions.length} ventas registradas hoy</span>
-            </div>
-            <div className="grid grid-cols-4 gap-px bg-black/5">
-              {transactions.map(tx => (
-                <div key={tx.id} className="bg-white p-4 hover:bg-[#f9fafb] transition-colors">
-                  <div className="flex items-start justify-between mb-3">
-                    <p className="text-[12px] font-semibold text-black leading-snug pr-2">{tx.product}</p>
-                    <div className={`flex items-center gap-1 shrink-0 text-[11px] font-semibold ${tx.paid ? 'text-emerald-600' : 'text-amber-600'}`}>
-                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${tx.paid ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                      {tx.paid ? 'Pagado' : 'Pendiente'}
+              {/* KPI Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                {kpis.map(kpi => (
+                  <div key={kpi.label} className="metric-card">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/60">{kpi.label}</p>
+                    <p className="mt-2.5 text-[2rem] md:text-[2.65rem] font-semibold text-white leading-none">{kpi.value}</p>
+                    <p className="mt-2 text-[0.85rem] md:text-[1rem] text-white/60 leading-snug">{kpi.sub}</p>
+                    <div className={`mt-2 flex items-center gap-1 text-[12px] font-semibold ${
+                      kpi.up === true ? 'text-emerald-400' : 'text-[#5b9fff]'
+                    }`}>
+                      {kpi.up !== null && <Icon path={icons.arrowUp} size={11} />}
+                      {kpi.trend}
                     </div>
                   </div>
-                  <p className="text-[10px] text-gray-400 font-mono mb-3">{tx.id} · {tx.time}</p>
-                  <div className="flex items-end justify-between">
-                    <span className="text-[11px] text-gray-400">{tx.qty} {tx.qty === 1 ? 'unidad' : 'unidades'}</span>
-                    <span className="text-[1.1rem] font-semibold text-black leading-none">{tx.total}</span>
+                ))}
+
+                {/* Aurora card */}
+                <div className="relative overflow-hidden metric-card p-0" style={{ background: 'none' }}>
+                  <div className="absolute inset-0">
+                    <Grainient color1="#f2b058" color2="#ff5500" color3="#f2b058"
+                      timeSpeed={2.4} colorBalance={0.15} warpStrength={2.1} warpFrequency={2}
+                      warpSpeed={1.5} warpAmplitude={100} blendAngle={20} blendSoftness={0.25}
+                      rotationAmount={400} noiseScale={1.8} grainAmount={0.03} grainScale={1}
+                      grainAnimated={false} contrast={1.3} gamma={0.85} saturation={1.8}
+                      centerX={0.1} centerY={0} zoom={0.85} />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-transparent" />
+                  <div className="relative z-10 flex flex-col justify-end h-full p-4 md:p-5">
+                    <h2 className="text-[2rem] md:text-[2.5rem] font-semibold leading-[0.9] text-white" style={{ fontFamily: 'Lora, serif' }}>
+                      Moderniza,<br />crece.
+                    </h2>
+                    <p className="mt-2 text-[0.85rem] text-white/90 leading-snug">Sin papeles,<br />sin pérdidas.</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          </div>
+              {/* Chart + Top Products */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                <div className="col-span-1 md:col-span-2 p-4 md:p-5 overflow-hidden flex flex-col" style={{ background: 'rgba(0,0,0,0.93)' }}>
+                  <div className="flex items-start justify-between mb-3 md:mb-4">
+                    <div>
+                      <h2 className="text-sm font-semibold text-white">Ventas de la semana</h2>
+                      <p className="text-[11px] text-white/35 mt-0.5">Total: S/ 11,380 · Lun 13 — Dom 18 Abr</p>
+                    </div>
+                    <span className="text-[11px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 shrink-0 ml-2">↑ +22.4%</span>
+                  </div>
+                  <div style={{ minHeight: 140 }} className="flex-1">
+                    <AreaChart dark />
+                  </div>
+                </div>
+
+                <div className="bg-white p-4 md:p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-sm font-semibold text-black">Lo más vendido</h2>
+                    <span className="text-[10px] text-gray-400 font-medium">hoy</span>
+                  </div>
+                  <div className="space-y-3 md:space-y-4">
+                    {(() => {
+                      const colors = ['#0c61f3', '#7c3aed', '#059669', '#d97706', '#dc2626']
+                      const maxUnits = Math.max(...topProducts.map(x => x.units))
+                      return topProducts.map((p, i) => {
+                        const pct = (p.units / maxUnits) * 100
+                        return (
+                          <div key={p.name} className="flex items-center gap-2 md:gap-3">
+                            <div className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-[11px] font-bold shrink-0"
+                              style={{ background: colors[i] + '14', color: colors[i] }}>
+                              {i + 1}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-[11px] md:text-[12px] font-semibold text-black truncate">{p.name}</span>
+                                <span className="text-[11px] font-bold shrink-0 ml-2" style={{ color: colors[i] }}>{p.revenue}</span>
+                              </div>
+                              <div className="h-0.75 bg-gray-100 w-full">
+                                <div className="h-0.75" style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${colors[i]}66, ${colors[i]})` }} />
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })
+                    })()}
+                  </div>
+                </div>
+              </div>
+
+              {/* Transactions */}
+              <div className="bg-white">
+                <div className="px-4 md:px-5 py-3 md:py-4 border-b border-black/5 flex items-center justify-between">
+                  <h2 className="text-sm font-semibold text-black">Últimas transacciones</h2>
+                  <span className="text-[11px] text-gray-400">{transactions.length} ventas hoy</span>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-black/5">
+                  {transactions.map(tx => (
+                    <div key={tx.id} className="bg-white p-3 md:p-4 hover:bg-[#f9fafb] transition-colors">
+                      <div className="flex items-start justify-between mb-2">
+                        <p className="text-[11px] md:text-[12px] font-semibold text-black leading-snug pr-1">{tx.product}</p>
+                        <div className={`flex items-center gap-1 shrink-0 text-[10px] font-semibold ${tx.paid ? 'text-emerald-600' : 'text-amber-600'}`}>
+                          <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${tx.paid ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                          {tx.paid ? 'Ok' : '...'}
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-gray-400 font-mono mb-2">{tx.id} · {tx.time}</p>
+                      <div className="flex items-end justify-between">
+                        <span className="text-[10px] text-gray-400">{tx.qty} uds.</span>
+                        <span className="text-[1rem] font-semibold text-black leading-none">{tx.total}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
           )}
 
         </main>
       </div>
+
+      {/* Bottom nav — mobile only */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-black/7 flex">
+        {navItems.map(item => (
+          <button key={item.label} onClick={() => setActiveNav(item.label)}
+            className={`flex-1 flex flex-col items-center gap-0.5 py-2.5 transition-colors ${
+              activeNav === item.label ? 'text-black' : 'text-gray-400'
+            }`}>
+            <Icon path={item.icon} size={19} />
+            <span className="text-[9px] font-semibold">{item.label}</span>
+            {activeNav === item.label && <span className="w-1 h-1 bg-black rounded-full" />}
+          </button>
+        ))}
+      </nav>
+
     </motion.div>
   )
 }

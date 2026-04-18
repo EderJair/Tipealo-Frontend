@@ -49,9 +49,7 @@ function MonthChart() {
             <line x1={pad.l} y1={y} x2={pad.l + cw} y2={y}
               stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="4 3" />
             <text x={pad.l - 6} y={y + 4} textAnchor="end" fontSize="10"
-              fill="rgba(255,255,255,0.2)" fontFamily="sans-serif">
-              S/{tick / 1000}k
-            </text>
+              fill="rgba(255,255,255,0.2)" fontFamily="sans-serif">S/{tick / 1000}k</text>
           </g>
         )
       })}
@@ -66,9 +64,7 @@ function MonthChart() {
               fill={isLast ? '#34d399' : '#1a1a1a'} stroke="#34d399" strokeWidth="2" />
             {isLast && (
               <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize="11"
-                fill="white" fontWeight="700" fontFamily="sans-serif">
-                S/ 18,420
-              </text>
+                fill="white" fontWeight="700" fontFamily="sans-serif">S/ 18,420</text>
             )}
           </g>
         )
@@ -85,69 +81,62 @@ function MonthChart() {
 }
 
 export default function GananciasView() {
-  const totalGanancia = 18420
   const meta = 25000
-  const pct = Math.round((totalGanancia / meta) * 100)
-  const falta = meta - totalGanancia
+  const pct  = Math.round((18420 / meta) * 100)
+  const falta = meta - 18420
 
   return (
-    <div className="p-6 space-y-4" style={{ fontFamily: 'Lora, serif' }}>
+    <div className="p-3 md:p-6 space-y-3 md:space-y-4" style={{ fontFamily: 'Lora, serif' }}>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <div className="metric-card">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/60">Ganancia del mes</p>
-          <p className="mt-2.5 text-[2.65rem] font-semibold text-white leading-none">S/ 18,420</p>
-          <p className="mt-2 text-[1rem] text-white/60">Abril 2025</p>
-          <div className="mt-3 flex items-center gap-1 text-[13px] font-semibold text-emerald-400">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
-            </svg>
-            +7.7% vs Marzo
-          </div>
+          <p className="mt-2.5 text-[2rem] md:text-[2.65rem] font-semibold text-white leading-none">S/ 18,420</p>
+          <p className="mt-2 text-[0.9rem] text-white/60">Abril 2025</p>
+          <div className="mt-2 flex items-center gap-1 text-[12px] font-semibold text-emerald-400">+7.7% vs Marzo</div>
         </div>
         <div className="metric-card">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/60">Margen promedio</p>
-          <p className="mt-2.5 text-[2.65rem] font-semibold text-white leading-none">33%</p>
-          <p className="mt-2 text-[1rem] text-white/60">sobre el costo</p>
-          <div className="mt-3 text-[13px] font-semibold text-[#5b9fff]">saludable para abarrotes</div>
+          <p className="mt-2.5 text-[2rem] md:text-[2.65rem] font-semibold text-white leading-none">33%</p>
+          <p className="mt-2 text-[0.9rem] text-white/60">sobre el costo</p>
+          <div className="mt-2 text-[12px] font-semibold text-[#5b9fff]">saludable</div>
         </div>
         <div className="metric-card">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/60">Costo del mes</p>
-          <p className="mt-2.5 text-[2.65rem] font-semibold text-white leading-none">S/ 37,200</p>
-          <p className="mt-2 text-[1rem] text-white/60">en mercadería</p>
-          <div className="mt-3 text-[13px] font-semibold text-white/40">ingresos S/ 55,620</div>
+          <p className="mt-2.5 text-[2rem] md:text-[2.65rem] font-semibold text-white leading-none">S/ 37,200</p>
+          <p className="mt-2 text-[0.9rem] text-white/60">en mercadería</p>
+          <div className="mt-2 text-[12px] font-semibold text-white/40">ingresos S/ 55,620</div>
         </div>
-
         <div className="metric-card">
           <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/60">Meta del mes</p>
-          <p className="mt-2.5 text-[2.65rem] font-semibold text-white leading-none">{pct}%</p>
+          <p className="mt-2.5 text-[2rem] md:text-[2.65rem] font-semibold text-white leading-none">{pct}%</p>
           <div className="mt-2 h-1 bg-white/15 w-full">
             <div className="h-1 bg-white/70" style={{ width: `${pct}%` }} />
           </div>
-          <p className="mt-2 text-[1rem] text-white/60">S/ {falta.toLocaleString()} para la meta</p>
+          <p className="mt-2 text-[0.9rem] text-white/60">S/ {falta.toLocaleString()} para la meta</p>
         </div>
       </div>
 
       {/* Monthly chart */}
-      <div className="flex flex-col overflow-hidden p-5" style={{ background: 'rgba(0,0,0,0.93)' }}>
-        <div className="flex items-start justify-between mb-4">
+      <div className="p-4 md:p-5" style={{ background: 'rgba(0,0,0,0.93)' }}>
+        <div className="flex items-start justify-between mb-3 md:mb-4">
           <div>
             <h2 className="text-sm font-semibold text-white">Ganancia mensual</h2>
             <p className="text-[11px] text-white/35 mt-0.5">Octubre 2024 — Abril 2025</p>
           </div>
-          <span className="text-[11px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5">
+          <span className="text-[11px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 shrink-0 ml-2">
             ↑ Mejor mes del año
           </span>
         </div>
-        <div style={{ height: 180 }}>
+        <div style={{ height: 160 }}>
           <MonthChart />
         </div>
       </div>
 
       {/* Category margins */}
       <div className="bg-white">
-        <div className="px-5 py-4 border-b border-black/5">
+        <div className="px-4 md:px-5 py-3 md:py-4 border-b border-black/5">
           <h2 className="text-sm font-semibold text-black">Margen por categoría</h2>
           <p className="text-[11px] text-gray-400 mt-0.5">ingreso vs costo — Abril 2025</p>
         </div>
@@ -155,26 +144,24 @@ export default function GananciasView() {
           {categories.map(c => {
             const marginColor = c.margin >= 35 ? '#059669' : c.margin >= 28 ? '#0c61f3' : '#d97706'
             return (
-              <div key={c.name} className="px-5 py-4 flex items-center gap-4 hover:bg-gray-50/50 transition-colors">
-                <div className="w-32 shrink-0">
-                  <p className="text-[12px] font-semibold text-black">{c.name}</p>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
+              <div key={c.name} className="px-4 md:px-5 py-3 md:py-4 flex items-center gap-3 hover:bg-gray-50/50 transition-colors">
+                <p className="text-[12px] font-semibold text-black w-28 md:w-36 shrink-0 leading-snug">{c.name}</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
                     <div className="flex-1 h-1.5 bg-gray-100">
                       <div className="h-1.5" style={{ width: `${(c.income / 8400) * 100}%`, background: `${marginColor}80` }} />
                     </div>
-                    <span className="text-[11px] text-gray-400 w-20 text-right shrink-0">S/ {c.income.toLocaleString()}</span>
+                    <span className="text-[10px] text-gray-400 shrink-0">S/ {c.income.toLocaleString()}</span>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <div className="flex-1 h-1.5 bg-gray-100">
                       <div className="h-1.5 bg-gray-300" style={{ width: `${(c.cost / 8400) * 100}%` }} />
                     </div>
-                    <span className="text-[11px] text-gray-400 w-20 text-right shrink-0">S/ {c.cost.toLocaleString()}</span>
+                    <span className="text-[10px] text-gray-400 shrink-0">S/ {c.cost.toLocaleString()}</span>
                   </div>
                 </div>
-                <div className="w-16 text-right shrink-0">
-                  <span className="text-[1.1rem] font-bold" style={{ color: marginColor }}>{c.margin}%</span>
+                <div className="text-right shrink-0 w-12">
+                  <span className="text-[1rem] font-bold" style={{ color: marginColor }}>{c.margin}%</span>
                   <p className="text-[10px] text-gray-400">margen</p>
                 </div>
               </div>
