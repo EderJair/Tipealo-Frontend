@@ -1,76 +1,153 @@
-const highlights = [
-  'Vite + React 19 + TypeScript',
-  'Tailwind CSS v4 con plugin oficial',
-  'Base lista para iterar sin configuración extra',
+import Grainient from './components/Grainient'
+
+const metrics = [
+  {
+    label: 'Stock actual',
+    value: '1,248',
+    detail: 'productos listos para vender',
+  },
+  {
+    label: 'Ganancias del mes',
+    value: 'S/ 18,420',
+    detail: 'ganancias acumuladas',
+  },
+  {
+    label: 'Ventas de hoy',
+    value: 'S/ 2,090',
+    detail: 'ventas registradas',
+  },
 ]
 
 function App() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#1f2937,#020617_60%)] text-slate-100">
-      <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-6 py-12 sm:px-8 lg:px-12">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <section className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 backdrop-blur">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              Proyecto inicial creado con pnpm
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-sm uppercase tracking-[0.35em] text-sky-300/80">
-                Tipealo Frontend
-              </p>
-              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                React con Vite y Tailwind, listo para construir la interfaz.
-              </h1>
-              <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-                Dejé configurada una base actualizada con el plugin oficial de Tailwind en Vite,
-                TypeScript y una primera pantalla simple para confirmar que el stack funciona.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              {highlights.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </section>
-
-          <aside className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl shadow-sky-950/30 backdrop-blur-xl sm:p-8">
-            <div className="space-y-5">
-              <div className="flex items-center justify-between text-sm text-slate-400">
-                <span>Stack</span>
-                <span>Actualizado</span>
-              </div>
-
-              <div className="space-y-4">
-                <div className="rounded-2xl border border-sky-400/20 bg-sky-400/10 p-4">
-                  <p className="text-xs uppercase tracking-[0.3em] text-sky-200/70">Vite</p>
-                  <p className="mt-2 text-lg font-medium text-white">@tailwindcss/vite</p>
-                  <p className="mt-1 text-sm text-slate-300">Integración directa con el plugin oficial.</p>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/70">Tailwind</p>
-                  <p className="mt-2 text-lg font-medium text-white">@import &quot;tailwindcss&quot;;</p>
-                  <p className="mt-1 text-sm text-slate-300">Sin configuración extra de CSS tradicional.</p>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.3em] text-amber-200/70">Próximo paso</p>
-                  <p className="mt-2 text-lg font-medium text-white">pnpm dev</p>
-                  <p className="mt-1 text-sm text-slate-300">Levanta el proyecto y empieza a construir.</p>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </div>
+    <main className="relative h-svh overflow-hidden bg-white text-slate-950">
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-100">
+        <Grainient
+          color1="#ffffff"
+          color2="#0c61f3"
+          color3="#ffffff"
+          timeSpeed={0.25}
+          colorBalance={0}
+          warpStrength={1}
+          warpFrequency={5}
+          warpSpeed={2}
+          warpAmplitude={50}
+          blendAngle={0}
+          blendSoftness={0.05}
+          rotationAmount={500}
+          noiseScale={2}
+          grainAmount={0.2}
+          grainScale={2}
+          grainAnimated={false}
+          contrast={1.5}
+          gamma={1}
+          saturation={1}
+          centerX={0}
+          centerY={0}
+          zoom={0.9}
+        />
       </div>
-    </main>
+
+      <div className="relative z-10 flex h-svh w-full flex-col px-4 py-3 sm:px-6 lg:px-8">
+        <header className="grid grid-cols-[1fr_auto_1fr] items-center bg-transparent px-4 py-3">
+          <p className="justify-self-start text-2xl font-extrabold tracking-[0.18em] text-black">TIPELAO</p>
+
+          <nav className="hidden items-center gap-3 text-sm text-black md:flex md:justify-self-center">
+            <a
+              href="#"
+              className=" border-black/30 bg-black px-4 py-1.5 text-xs font-medium text-white"
+            >
+              Individual
+            </a>
+            <a href="#" className="text-sm text-black">
+              Company
+            </a>
+            <a href="#" className="text-sm text-black">
+              Solutions
+            </a>
+            <a href="#" className="text-sm text-black">
+              Services
+            </a>
+            <a href="#" className="text-sm text-black">
+              About us
+            </a>
+            <a href="#" className="text-sm text-black">
+              Blog
+            </a>
+          </nav>
+
+          <a
+            href="#contacto"
+            className="justify-self-end border-black/30 bg-black px-5 py-2 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:shadow-md"
+          >
+            Sign up
+          </a>
+        </header>
+
+        <section className="relative flex flex-1 items-center justify-center py-1 sm:py-2 lg:py-3">
+          <div className="relative mx-auto w-full max-w-4xl text-center">
+              <div className="mb-3 inline-flex items-center bg-black px-4 py-2 text-xs font-medium text-white shadow-sm">
+                Próximamente
+              </div>
+
+              <h1 className="font-display mx-auto max-w-3xl text-[clamp(2.5rem,4.6vw,4.2rem)] font-semibold leading-[0.95] tracking-tight text-slate-950">
+                Controla tu mercado sin cuadernos ni hojas sueltas.
+              </h1>
+
+              <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-7 text-black sm:text-base">
+                Tipealo es una app pensada para mercados peruanos que necesitan orden real: stock
+                actual, ganancias del mes y cuanto vendiste hoy, todo en una sola vista, sin hojas
+                que se pierden, se queman o se rompen.
+              </p>
+
+              <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <a
+                  href="#contacto"
+                  className=" bg-black px-7 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-black/90"
+                >
+                  Explorar producto
+                </a>
+                <a
+                  href="#contacto"
+                  className=" border-black/15 bg-white px-7 py-3 text-sm font-medium text-slate-900 transition hover:-translate-y-0.5 hover:shadow-md"
+                >
+                  Book a demo
+                </a>
+              </div>
+
+              <div className="mx-auto mt-8 grid w-full max-w-4xl gap-4 sm:grid-cols-3">
+                {metrics.map((metric) => (
+                  <article
+                    key={metric.label}
+                    className="metric-card text-left"
+                  >
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white">{metric.label}</p>
+                    <p className="font-display mt-2 text-[2.8rem] font-semibold leading-none text-white">
+                      {metric.value}
+                    </p>
+                    <p className="mt-2 text-[1rem] leading-6 text-white">{metric.detail}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="mt-12">
+                <p className="text-xs text-black">Confiado por negocios que venden cada dia</p>
+                <div className="mt-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-black">
+                  <span>Mercado Central</span>
+                  <span>Parada Lima</span>
+                  <span>Santa Anita</span>
+                  <span>Caqueta</span>
+                  <span>Ventanilla</span>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <section id="contacto" className="sr-only">
+          Próximamente
+        </section>
+        </div>
+      </main>
   )
 }
 
