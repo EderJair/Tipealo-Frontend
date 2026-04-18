@@ -224,8 +224,11 @@ export default function Demo() {
             <span className="hidden md:inline text-[10px] font-semibold tracking-widest text-gray-400 border border-gray-200 px-2.5 py-1">
               DATOS DE DEMO
             </span>
-            {/* Mobile: active section label */}
+            {/* Mobile: active section label + back */}
             <span className="md:hidden text-[11px] font-semibold text-gray-500">{activeNav}</span>
+            <Link to="/" className="md:hidden text-[11px] font-semibold text-gray-400 border border-gray-200 px-2.5 py-1 hover:text-black transition-colors">
+              ← Salir
+            </Link>
             <button className="relative text-gray-400 hover:text-black transition-colors">
               <Icon path={icons.bell} size={18} />
               <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-[#0c61f3] rounded-full" />

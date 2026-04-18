@@ -41,10 +41,12 @@ export default function ConfigView() {
     <div className="p-3 md:p-6 space-y-3 md:space-y-4" style={{ fontFamily: 'Lora, serif' }}>
 
       {/* Top row: Silk card + Mi negocio side by side */}
-      <div className="flex gap-3 md:gap-4 items-stretch">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:items-stretch">
 
         {/* Silk brand card */}
-        <div className="relative overflow-hidden p-4 md:p-5 flex flex-col justify-between shrink-0" style={{ width: 200 }}>
+        <a href="https://www.linkedin.com/in/jair-quispe/" target="_blank" rel="noopener noreferrer"
+          className="relative overflow-hidden p-4 md:p-5 flex flex-col justify-between w-full md:w-50 md:shrink-0 cursor-pointer"
+          style={{ minHeight: 110 }}>
           <div className="absolute inset-0">
             <Silk speed={4} scale={1.2} color="#0ea5e9" noiseIntensity={1.8} rotation={0.3} />
           </div>
@@ -54,7 +56,7 @@ export default function ConfigView() {
               <p className="mt-1.5 text-[2.2rem] font-semibold text-white leading-none tracking-tight">JQ</p>
             </div>
           </div>
-        </div>
+        </a>
 
         {/* Mi negocio inline */}
         <div className="flex-1 bg-white min-w-0">
