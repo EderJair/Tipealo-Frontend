@@ -146,7 +146,16 @@ function App() {
         <section id="contacto" className="sr-only">
           Próximamente
         </section>
-        </div>
+
+        <a
+          href="https://www.linkedin.com/in/jair-quispe/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-3 left-4 text-sm font-semibold text-black transition hover:text-black"
+        >
+          Powered by JQ
+        </a>
+      </div>
       </main>
   )
 }
