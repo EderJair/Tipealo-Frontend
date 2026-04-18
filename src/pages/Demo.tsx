@@ -245,8 +245,8 @@ export default function Demo() {
 
               {/* KPI Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                {kpis.map(kpi => (
-                  <div key={kpi.label} className="metric-card">
+                {kpis.map((kpi, i) => (
+                  <div key={kpi.label} className={`metric-card${i === 2 ? ' col-span-2 md:col-span-1' : ''}`}>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white/60">{kpi.label}</p>
                     <p className="mt-2.5 text-[2rem] md:text-[2.65rem] font-semibold text-white leading-none">{kpi.value}</p>
                     <p className="mt-2 text-[0.85rem] md:text-[1rem] text-white/60 leading-snug">{kpi.sub}</p>
