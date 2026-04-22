@@ -72,12 +72,20 @@ export default function Landing() {
             <a href="#" className="text-sm text-black">Soporte</a>
           </nav>
 
-          <a
-            href="#contacto"
-            className="col-start-3 justify-self-end border-black/30 bg-black px-5 py-2 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:shadow-md"
-          >
-            Sign up
-          </a>
+          <div className="col-start-3 flex items-center gap-2 justify-self-end">
+            <Link
+              to="/login"
+              className="hidden sm:inline-block px-4 py-2 text-sm font-medium text-black border border-black/20 bg-white transition hover:-translate-y-0.5 hover:shadow-sm"
+            >
+              Iniciar sesión
+            </Link>
+            <Link
+              to="/login"
+              className="bg-black px-5 py-2 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              Regístrate
+            </Link>
+          </div>
         </header>
 
         <section className="relative flex flex-1 items-start justify-center py-4 md:items-center md:py-3">

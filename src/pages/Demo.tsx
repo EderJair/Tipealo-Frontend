@@ -180,11 +180,20 @@ export default function Demo() {
         <nav className="flex-1 py-3 px-2">
           {navItems.map(item => (
             <button key={item.label} onClick={() => setActiveNav(item.label)}
-              className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-all mb-0.5 text-left cursor-pointer ${
-                activeNav === item.label ? 'bg-black text-white' : 'text-gray-500 hover:bg-gray-50 hover:text-black'
+              className={`relative w-full flex items-center gap-2.5 px-3 py-2.5 text-sm mb-0.5 text-left cursor-pointer transition-colors ${
+                activeNav === item.label ? 'text-white' : 'text-gray-500 hover:text-black'
               }`}>
-              <Icon path={item.icon} size={15} />
-              {item.label === 'Config' ? 'Configuración' : item.label}
+              {activeNav === item.label && (
+                <motion.div
+                  layoutId="activeNav"
+                  className="absolute inset-0 bg-black"
+                  transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center gap-2.5">
+                <Icon path={item.icon} size={15} />
+                {item.label === 'Config' ? 'Configuración' : item.label}
+              </span>
             </button>
           ))}
         </nav>
@@ -299,10 +308,10 @@ export default function Demo() {
                   </div>
                 </div>
 
-                <div className="bg-white p-4 md:p-5">
+                <div className="p-4 md:p-5" style={{ background: 'rgba(0,0,0,0.93)' }}>
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-sm font-semibold text-black">Lo más vendido</h2>
-                    <span className="text-[10px] text-gray-400 font-medium">hoy</span>
+                    <h2 className="text-sm font-semibold text-white">Lo más vendido</h2>
+                    <span className="text-[10px] text-white/40 font-medium">hoy</span>
                   </div>
                   <div className="space-y-3 md:space-y-4">
                     {(() => {
@@ -313,15 +322,15 @@ export default function Demo() {
                         return (
                           <div key={p.name} className="flex items-center gap-2 md:gap-3">
                             <div className="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-[11px] font-bold shrink-0"
-                              style={{ background: colors[i] + '14', color: colors[i] }}>
+                              style={{ background: colors[i] + '22', color: colors[i] }}>
                               {i + 1}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between mb-1">
-                                <span className="text-[11px] md:text-[12px] font-semibold text-black truncate">{p.name}</span>
+                                <span className="text-[11px] md:text-[12px] font-semibold text-white truncate">{p.name}</span>
                                 <span className="text-[11px] font-bold shrink-0 ml-2" style={{ color: colors[i] }}>{p.revenue}</span>
                               </div>
-                              <div className="h-0.75 bg-gray-100 w-full">
+                              <div className="h-0.75 w-full" style={{ background: 'rgba(255,255,255,0.1)' }}>
                                 <div className="h-0.75" style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${colors[i]}66, ${colors[i]})` }} />
                               </div>
                             </div>
@@ -334,25 +343,25 @@ export default function Demo() {
               </div>
 
               {/* Transactions */}
-              <div className="bg-white">
-                <div className="px-4 md:px-5 py-3 md:py-4 border-b border-black/5 flex items-center justify-between">
-                  <h2 className="text-sm font-semibold text-black">Últimas transacciones</h2>
-                  <span className="text-[11px] text-gray-400">{transactions.length} ventas hoy</span>
+              <div style={{ background: 'rgba(0,0,0,0.93)' }}>
+                <div className="px-4 md:px-5 py-3 md:py-4 border-b border-white/8 flex items-center justify-between">
+                  <h2 className="text-sm font-semibold text-white">Últimas transacciones</h2>
+                  <span className="text-[11px] text-white/40">{transactions.length} ventas hoy</span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-black/5">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ background: 'rgba(255,255,255,0.05)' }}>
                   {transactions.map(tx => (
-                    <div key={tx.id} className="bg-white p-3 md:p-4 hover:bg-[#f9fafb] transition-colors">
+                    <div key={tx.id} className="p-3 md:p-4 transition-colors hover:bg-white/5" style={{ background: 'rgba(0,0,0,0.93)' }}>
                       <div className="flex items-start justify-between mb-2">
-                        <p className="text-[11px] md:text-[12px] font-semibold text-black leading-snug pr-1">{tx.product}</p>
-                        <div className={`flex items-center gap-1 shrink-0 text-[10px] font-semibold ${tx.paid ? 'text-emerald-600' : 'text-amber-600'}`}>
-                          <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${tx.paid ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                        <p className="text-[11px] md:text-[12px] font-semibold text-white leading-snug pr-1">{tx.product}</p>
+                        <div className={`flex items-center gap-1 shrink-0 text-[10px] font-semibold ${tx.paid ? 'text-emerald-400' : 'text-amber-400'}`}>
+                          <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${tx.paid ? 'bg-emerald-400' : 'bg-amber-400'}`} />
                           {tx.paid ? 'Ok' : '...'}
                         </div>
                       </div>
-                      <p className="text-[10px] text-gray-400 font-mono mb-2">{tx.id} · {tx.time}</p>
+                      <p className="text-[10px] text-white/40 font-mono mb-2">{tx.id} · {tx.time}</p>
                       <div className="flex items-end justify-between">
-                        <span className="text-[10px] text-gray-400">{tx.qty} uds.</span>
-                        <span className="text-[1rem] font-semibold text-black leading-none">{tx.total}</span>
+                        <span className="text-[10px] text-white/40">{tx.qty} uds.</span>
+                        <span className="text-[1rem] font-semibold text-white leading-none">{tx.total}</span>
                       </div>
                     </div>
                   ))}

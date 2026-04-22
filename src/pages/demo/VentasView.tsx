@@ -118,24 +118,24 @@ export default function VentasView() {
       </div>
 
       {/* Recent sales table */}
-      <div className="bg-white">
-        <div className="px-4 md:px-5 py-3 md:py-4 border-b border-black/5 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-black">Ventas recientes</h2>
+      <div style={{ background: 'rgba(0,0,0,0.93)' }}>
+        <div className="px-4 md:px-5 py-3 md:py-4 border-b border-white/8 flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-white">Ventas recientes</h2>
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />{pagadas} cobradas
+            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />{pagadas} cobradas
             </span>
-            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-600">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />{pendientes} pendientes
+            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-400">
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />{pendientes} pendientes
             </span>
           </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-140">
             <thead>
-              <tr className="border-b border-black/5">
+              <tr className="border-b border-white/8">
                 {['#', 'Producto', 'Hora', 'Cant.', 'Total', 'Estado'].map(col => (
-                  <th key={col} className="text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-400 px-4 py-3">
+                  <th key={col} className="text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-white/40 px-4 py-3">
                     {col}
                   </th>
                 ))}
@@ -143,15 +143,15 @@ export default function VentasView() {
             </thead>
             <tbody>
               {recentSales.map((s, i) => (
-                <tr key={s.id} className={`hover:bg-gray-50/50 transition-colors ${i < recentSales.length - 1 ? 'border-b border-black/4' : ''}`}>
-                  <td className="px-4 py-2.5 text-[11px] font-mono text-gray-400 whitespace-nowrap">{s.id}</td>
-                  <td className="px-4 py-2.5 text-[12px] font-semibold text-black whitespace-nowrap">{s.product}</td>
-                  <td className="px-4 py-2.5 text-[11px] text-gray-500">{s.time}</td>
-                  <td className="px-4 py-2.5 text-[12px] font-bold text-black">{s.qty}</td>
-                  <td className="px-4 py-2.5 text-[12px] font-semibold text-black whitespace-nowrap">S/ {s.total.toFixed(2)}</td>
+                <tr key={s.id} className={`transition-colors hover:bg-white/5 ${i < recentSales.length - 1 ? 'border-b border-white/5' : ''}`}>
+                  <td className="px-4 py-2.5 text-[11px] font-mono text-white/40 whitespace-nowrap">{s.id}</td>
+                  <td className="px-4 py-2.5 text-[12px] font-semibold text-white whitespace-nowrap">{s.product}</td>
+                  <td className="px-4 py-2.5 text-[11px] text-white/50">{s.time}</td>
+                  <td className="px-4 py-2.5 text-[12px] font-bold text-white">{s.qty}</td>
+                  <td className="px-4 py-2.5 text-[12px] font-semibold text-white whitespace-nowrap">S/ {s.total.toFixed(2)}</td>
                   <td className="px-4 py-2.5">
-                    <span className={`flex items-center gap-1.5 text-[11px] font-semibold ${s.paid ? 'text-emerald-600' : 'text-amber-600'}`}>
-                      <div className={`w-1.5 h-1.5 rounded-full ${s.paid ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <span className={`flex items-center gap-1.5 text-[11px] font-semibold ${s.paid ? 'text-emerald-400' : 'text-amber-400'}`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${s.paid ? 'bg-emerald-400' : 'bg-amber-400'}`} />
                       {s.paid ? 'Cobrado' : 'Pendiente'}
                     </span>
                   </td>

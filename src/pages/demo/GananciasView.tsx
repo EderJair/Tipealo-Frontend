@@ -135,34 +135,34 @@ export default function GananciasView() {
       </div>
 
       {/* Category margins */}
-      <div className="bg-white">
-        <div className="px-4 md:px-5 py-3 md:py-4 border-b border-black/5">
-          <h2 className="text-sm font-semibold text-black">Margen por categoría</h2>
-          <p className="text-[11px] text-gray-400 mt-0.5">ingreso vs costo — Abril 2025</p>
+      <div style={{ background: 'rgba(0,0,0,0.93)' }}>
+        <div className="px-4 md:px-5 py-3 md:py-4 border-b border-white/8">
+          <h2 className="text-sm font-semibold text-white">Margen por categoría</h2>
+          <p className="text-[11px] text-white/40 mt-0.5">ingreso vs costo — Abril 2025</p>
         </div>
-        <div className="divide-y divide-black/4">
+        <div className="divide-y divide-white/5">
           {categories.map(c => {
-            const marginColor = c.margin >= 35 ? '#059669' : c.margin >= 28 ? '#0c61f3' : '#d97706'
+            const marginColor = c.margin >= 35 ? '#34d399' : c.margin >= 28 ? '#5b9fff' : '#fbbf24'
             return (
-              <div key={c.name} className="px-4 md:px-5 py-3 md:py-4 flex items-center gap-3 hover:bg-gray-50/50 transition-colors">
-                <p className="text-[12px] font-semibold text-black w-28 md:w-36 shrink-0 leading-snug">{c.name}</p>
+              <div key={c.name} className="px-4 md:px-5 py-3 md:py-4 flex items-center gap-3 hover:bg-white/5 transition-colors">
+                <p className="text-[12px] font-semibold text-white w-28 md:w-36 shrink-0 leading-snug">{c.name}</p>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <div className="flex-1 h-1.5 bg-gray-100">
+                    <div className="flex-1 h-1.5" style={{ background: 'rgba(255,255,255,0.1)' }}>
                       <div className="h-1.5" style={{ width: `${(c.income / 8400) * 100}%`, background: `${marginColor}80` }} />
                     </div>
-                    <span className="text-[10px] text-gray-400 shrink-0">S/ {c.income.toLocaleString()}</span>
+                    <span className="text-[10px] text-white/40 shrink-0">S/ {c.income.toLocaleString()}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 h-1.5 bg-gray-100">
-                      <div className="h-1.5 bg-gray-300" style={{ width: `${(c.cost / 8400) * 100}%` }} />
+                    <div className="flex-1 h-1.5" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                      <div className="h-1.5" style={{ width: `${(c.cost / 8400) * 100}%`, background: 'rgba(255,255,255,0.2)' }} />
                     </div>
-                    <span className="text-[10px] text-gray-400 shrink-0">S/ {c.cost.toLocaleString()}</span>
+                    <span className="text-[10px] text-white/40 shrink-0">S/ {c.cost.toLocaleString()}</span>
                   </div>
                 </div>
                 <div className="text-right shrink-0 w-12">
                   <span className="text-[1rem] font-bold" style={{ color: marginColor }}>{c.margin}%</span>
-                  <p className="text-[10px] text-gray-400">margen</p>
+                  <p className="text-[10px] text-white/40">margen</p>
                 </div>
               </div>
             )

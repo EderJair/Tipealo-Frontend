@@ -16,7 +16,7 @@
 html,
 body {
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body {
@@ -25,7 +25,16 @@ body {
 
 #root {
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  html,
+  body,
+  #root {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 
 h1,
@@ -45,15 +54,8 @@ h3,
   backdrop-filter: blur(6px);
 }
 
-@media (max-width: 768px) {
-  html,
-  body,
-  #root {
-    height: auto;
-    overflow-y: auto;
-  }
-
-  .metric-card {
+.metric-card {
+  @media (max-width: 768px) {
     min-height: 140px;
   }
 }
