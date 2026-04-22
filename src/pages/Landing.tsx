@@ -179,7 +179,7 @@ export default function Landing() {
       })
 
       /* ── COUNTERS ── */
-      gsap.utils.toArray<HTMLElement>('.counter-val').forEach((el) => {
+      gsap.utils.toArray<HTMLElement>('.counter-val').forEach((el: HTMLElement) => {
         const end = parseInt(el.dataset.val || '0')
         const obj = { val: 0 }
         gsap.to(obj, {
