@@ -137,13 +137,13 @@ export default function Landing() {
         { clipPath: 'inset(0 0 100% 0)', y: 20 },
         { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1.1, ease: 'expo.out', delay: 0.1 }
       )
-      gsap.from('.hero-sub', { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out', delay: 0.55 })
+      gsap.fromTo('.hero-sub', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.55 })
       gsap.fromTo('.hero-btns > *',
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', delay: 0.75, stagger: 0.1 }
       )
-      gsap.from('.hero-metric', { opacity: 0, y: 28, duration: 0.55, ease: 'power3.out', delay: 0.95, stagger: 0.09 })
-      gsap.from('.hero-markets', { opacity: 0, duration: 0.5, delay: 1.25 })
+      gsap.fromTo('.hero-metric', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 0.95, stagger: 0.09 })
+      gsap.fromTo('.hero-markets', { opacity: 0 }, { opacity: 1, duration: 0.5, delay: 1.25 })
 
       /* ── VENDOR SECTION ── */
       // photo wipe from left
@@ -162,21 +162,23 @@ export default function Landing() {
         scrollTrigger: { trigger: '.vendor-section', start: 'top bottom', end: 'bottom top', scrub: true, scroller },
       })
       // copy slides from right
-      gsap.from('.vendor-copy > *', {
-        opacity: 0, x: 50, duration: 0.85, ease: 'power3.out', stagger: 0.12,
-        scrollTrigger: { trigger: '.vendor-section', start: 'top 65%', scroller },
-      })
+      gsap.fromTo('.vendor-copy > *',
+        { opacity: 0, x: 50 },
+        { opacity: 1, x: 0, duration: 0.85, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.vendor-section', start: 'top 65%', scroller } }
+      )
 
       /* ── STEPS ── */
-      gsap.from('.steps-heading > *', {
-        opacity: 0, y: 30, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: '.steps-section', start: 'top 78%', scroller },
-      })
-      gsap.from('.step-card', {
-        opacity: 0, y: 70, scale: 0.97, transformOrigin: 'bottom center',
-        duration: 0.9, ease: 'power3.out', stagger: 0.15,
-        scrollTrigger: { trigger: '.steps-section', start: 'top 65%', scroller },
-      })
+      gsap.fromTo('.steps-heading > *',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: '.steps-section', start: 'top 78%', scroller } }
+      )
+      gsap.fromTo('.step-card',
+        { opacity: 0, y: 70, scale: 0.97, transformOrigin: 'bottom center' },
+        { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', stagger: 0.15,
+          scrollTrigger: { trigger: '.steps-section', start: 'top 65%', scroller } }
+      )
 
       /* ── COUNTERS ── */
       (gsap.utils.toArray('.counter-val') as HTMLElement[]).forEach((el: HTMLElement) => {
@@ -191,10 +193,11 @@ export default function Landing() {
           onUpdate: () => { el.textContent = obj.val.toLocaleString('es-PE') },
         })
       })
-      gsap.from('.counter-item', {
-        opacity: 0, y: 50, duration: 0.8, ease: 'power3.out', stagger: 0.18,
-        scrollTrigger: { trigger: '.counters-section', start: 'top 70%', scroller },
-      })
+      gsap.fromTo('.counter-item',
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.18,
+          scrollTrigger: { trigger: '.counters-section', start: 'top 70%', scroller } }
+      )
 
       /* ── BIG TESTIMONIAL ── */
       gsap.fromTo('.testi-photo',
@@ -205,38 +208,43 @@ export default function Landing() {
           scrollTrigger: { trigger: '.big-testi-section', start: 'top 70%', scroller },
         }
       )
-      gsap.from('.testi-quote > *', {
-        opacity: 0, y: 40, duration: 0.8, ease: 'power3.out', stagger: 0.14,
-        scrollTrigger: { trigger: '.big-testi-section', start: 'top 65%', scroller },
-      })
+      gsap.fromTo('.testi-quote > *',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.14,
+          scrollTrigger: { trigger: '.big-testi-section', start: 'top 65%', scroller } }
+      )
       // smaller testimonial cards
-      gsap.from('.testi-card', {
-        opacity: 0, y: 50, duration: 0.75, ease: 'power3.out', stagger: 0.14,
-        scrollTrigger: { trigger: '.mini-testis', start: 'top 70%', scroller },
-      })
+      gsap.fromTo('.testi-card',
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', stagger: 0.14,
+          scrollTrigger: { trigger: '.mini-testis', start: 'top 70%', scroller } }
+      )
 
       /* ── PRICING ── */
-      gsap.from('.price-heading > *', {
-        opacity: 0, y: 30, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: '.pricing-section', start: 'top 78%', scroller },
-      })
-      gsap.from('.price-card', {
-        opacity: 0, y: 70, scale: 0.95, transformOrigin: 'bottom center',
-        duration: 0.9, ease: 'power3.out', stagger: 0.2,
-        scrollTrigger: { trigger: '.pricing-section', start: 'top 65%', scroller },
-      })
+      gsap.fromTo('.price-heading > *',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: '.pricing-section', start: 'top 78%', scroller } }
+      )
+      gsap.fromTo('.price-card',
+        { opacity: 0, y: 70, scale: 0.95, transformOrigin: 'bottom center' },
+        { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', stagger: 0.2,
+          scrollTrigger: { trigger: '.pricing-section', start: 'top 65%', scroller } }
+      )
 
       /* ── SUPPORT ── */
-      gsap.from('.support-content > *', {
-        opacity: 0, y: 40, duration: 0.7, ease: 'power3.out', stagger: 0.12,
-        scrollTrigger: { trigger: '.support-section', start: 'top 72%', scroller },
-      })
+      gsap.fromTo('.support-content > *',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.support-section', start: 'top 72%', scroller } }
+      )
 
       /* ── FOOTER ── */
-      gsap.from('.footer-top', {
-        opacity: 0, y: 30, duration: 0.6, ease: 'power3.out',
-        scrollTrigger: { trigger: '.footer-section', start: 'top 85%', scroller },
-      })
+      gsap.fromTo('.footer-top',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+          scrollTrigger: { trigger: '.footer-section', start: 'top 85%', scroller } }
+      )
       gsap.fromTo('.footer-brand',
         { opacity: 0, y: 80 },
         {
