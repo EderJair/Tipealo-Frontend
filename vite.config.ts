@@ -6,6 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   optimizeDeps: {
-    include: ['gsap', 'gsap/ScrollTrigger'],
+    include: ['gsap/dist/gsap', 'gsap/dist/ScrollTrigger'],
   },
 })
