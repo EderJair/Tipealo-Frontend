@@ -1,13 +1,9 @@
 import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import gsap from 'gsap/dist/gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import Lenis from 'lenis'
 import Grainient from '../components/Grainient'
 import Mascot from '../components/Mascot'
-
-gsap.registerPlugin(ScrollTrigger)
 
 /* ── verified stock photos ── */
 const IMGS = {
@@ -101,164 +97,18 @@ export default function Landing() {
 
   useLayoutEffect(() => {
     const scroller = scrollRef.current!
-
-    /* ── 1. Lenis — must be first so scrollerProxy exists before GSAP registers triggers ── */
     const lenis = new Lenis({
       wrapper:     scroller,
       content:     contentRef.current!,
       lerp:        0.065,
       smoothWheel: true,
       syncTouch:   false,
-      autoRaf:     false,
+      autoRaf:     true,
     })
     lenisRef.current = lenis
 
-    ScrollTrigger.scrollerProxy(scroller, {
-      scrollTop(value?: number) {
-        if (arguments.length && value !== undefined) lenis.scrollTo(value, { immediate: true })
-        return lenis.scroll
-      },
-      getBoundingClientRect() {
-        return { top: 0, left: 0, width: scroller.clientWidth, height: scroller.clientHeight }
-      },
-    })
-
-    lenis.on('scroll', () => ScrollTrigger.update())
-
-    const lenisTick = (time: number) => lenis.raf(time * 1000)
-    gsap.ticker.add(lenisTick)
-    gsap.ticker.lagSmoothing(0)
-
-    /* ── 2. GSAP animations ── */
-    const ctx = gsap.context(() => {
-
-      /* ── HERO: clip-path wipe reveal ── */
-      gsap.fromTo('.hero-h1',
-        { clipPath: 'inset(0 0 100% 0)', y: 20 },
-        { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1.1, ease: 'expo.out', delay: 0.1 }
-      )
-      gsap.fromTo('.hero-sub', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.55 })
-      gsap.fromTo('.hero-btns > *',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', delay: 0.75, stagger: 0.1 }
-      )
-      gsap.fromTo('.hero-metric', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 0.95, stagger: 0.09 })
-      gsap.fromTo('.hero-markets', { opacity: 0 }, { opacity: 1, duration: 0.5, delay: 1.25 })
-
-      /* ── VENDOR SECTION ── */
-      // photo wipe from left
-      gsap.fromTo('.vendor-img-clip',
-        { clipPath: 'inset(0 100% 0 0)' },
-        {
-          clipPath: 'inset(0 0% 0 0)',
-          duration: 1.3, ease: 'expo.out',
-          scrollTrigger: { trigger: '.vendor-section', start: 'top 70%', scroller },
-        }
-      )
-      // parallax on photo
-      gsap.to('.vendor-img', {
-        yPercent: -18,
-        ease: 'none',
-        scrollTrigger: { trigger: '.vendor-section', start: 'top bottom', end: 'bottom top', scrub: true, scroller },
-      })
-      // copy slides from right
-      gsap.fromTo('.vendor-copy > *',
-        { opacity: 0, x: 50 },
-        { opacity: 1, x: 0, duration: 0.85, ease: 'power3.out', stagger: 0.12,
-          scrollTrigger: { trigger: '.vendor-section', start: 'top 65%', scroller } }
-      )
-
-      /* ── STEPS ── */
-      gsap.fromTo('.steps-heading > *',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: { trigger: '.steps-section', start: 'top 78%', scroller } }
-      )
-      gsap.fromTo('.step-card',
-        { opacity: 0, y: 70, scale: 0.97, transformOrigin: 'bottom center' },
-        { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', stagger: 0.15,
-          scrollTrigger: { trigger: '.steps-section', start: 'top 65%', scroller } }
-      )
-
-      /* ── COUNTERS ── */
-      (gsap.utils.toArray('.counter-val') as HTMLElement[]).forEach((el: HTMLElement) => {
-        const end = parseInt(el.dataset.val || '0')
-        const obj = { val: 0 }
-        gsap.to(obj, {
-          val: end,
-          duration: 2.5,
-          ease: 'power2.out',
-          snap: { val: 1 },
-          scrollTrigger: { trigger: el, start: 'top 80%', scroller },
-          onUpdate: () => { el.textContent = obj.val.toLocaleString('es-PE') },
-        })
-      })
-      gsap.fromTo('.counter-item',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.18,
-          scrollTrigger: { trigger: '.counters-section', start: 'top 70%', scroller } }
-      )
-
-      /* ── BIG TESTIMONIAL ── */
-      gsap.fromTo('.testi-photo',
-        { clipPath: 'inset(100% 0 0 0)' },
-        {
-          clipPath: 'inset(0% 0 0 0)',
-          duration: 1.2, ease: 'expo.out',
-          scrollTrigger: { trigger: '.big-testi-section', start: 'top 70%', scroller },
-        }
-      )
-      gsap.fromTo('.testi-quote > *',
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.14,
-          scrollTrigger: { trigger: '.big-testi-section', start: 'top 65%', scroller } }
-      )
-      // smaller testimonial cards
-      gsap.fromTo('.testi-card',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', stagger: 0.14,
-          scrollTrigger: { trigger: '.mini-testis', start: 'top 70%', scroller } }
-      )
-
-      /* ── PRICING ── */
-      gsap.fromTo('.price-heading > *',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: { trigger: '.pricing-section', start: 'top 78%', scroller } }
-      )
-      gsap.fromTo('.price-card',
-        { opacity: 0, y: 70, scale: 0.95, transformOrigin: 'bottom center' },
-        { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', stagger: 0.2,
-          scrollTrigger: { trigger: '.pricing-section', start: 'top 65%', scroller } }
-      )
-
-      /* ── SUPPORT ── */
-      gsap.fromTo('.support-content > *',
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12,
-          scrollTrigger: { trigger: '.support-section', start: 'top 72%', scroller } }
-      )
-
-      /* ── FOOTER ── */
-      gsap.fromTo('.footer-top',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
-          scrollTrigger: { trigger: '.footer-section', start: 'top 85%', scroller } }
-      )
-      gsap.fromTo('.footer-brand',
-        { opacity: 0, y: 80 },
-        {
-          opacity: 1, y: 0, duration: 1.1, ease: 'expo.out',
-          scrollTrigger: { trigger: '.footer-brand', start: 'top 90%', scroller },
-        }
-      )
-    })
-
     return () => {
-      ctx.revert()
-      gsap.ticker.remove(lenisTick)
       lenis.destroy()
-      ScrollTrigger.clearScrollMemory()
     }
   }, [])
 
@@ -455,7 +305,7 @@ export default function Landing() {
                 <div key={s.label} className="counter-item">
                   <p className="text-[3.5rem] sm:text-[4.5rem] lg:text-[6rem] font-semibold text-white leading-none"
                     style={{ fontFamily: 'Lora, serif' }}>
-                    <span className="counter-val" data-val={String(s.val)}>0</span>
+                    <span>{s.val.toLocaleString('es-PE')}</span>
                     {s.suffix && <span className="text-white/50">{s.suffix}</span>}
                   </p>
                   <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/30"
