@@ -4,20 +4,29 @@ import { motion } from 'framer-motion'
 import Lenis from 'lenis'
 import Grainient from '../components/Grainient'
 import Mascot from '../components/Mascot'
+import CountUp from '../components/CountUp'
+import Reveal from '../components/Reveal'
+import FeatureBento from '../components/FeatureBento'
+import {
+  QuoteIcon, WhatsAppIcon, PhoneIcon, MailIcon, ClockIcon,
+  ChatIcon, PeruMarkIcon, LinkedInIcon, CheckIcon,
+} from '../components/icons'
 
-/* ── verified stock photos ── */
+/* ── Fotos de mercados peruanos, servidas desde /public/img — sin CDN externo.
+      Licencia Pexels: uso comercial libre, sin atribución obligatoria. ── */
 const IMGS = {
-  vendorWoman:  'https://images.unsplash.com/photo-1470509037663-253afd7f0f51?auto=format&fit=crop&w=900&q=85',
-  marketFruits: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1400&q=80',
-  marketScene:  'https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&w=1400&q=80',
-  groceryStore: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=85',
-  marketStall:  'https://images.pexels.com/photos/3962285/pexels-photo-3962285.jpeg?auto=compress&cs=tinysrgb&w=900',
+  vendorWoman:  '/img/senora-puesto.jpg',      // señora en su puesto de frutas
+  marketFruits: '/img/pasadizo-mercado.jpg',   // pasadizo de mercado andino
+  marketScene:  '/img/calle-mercado.jpg',      // calle de mercado, Huaraz
+  groceryStore: '/img/mercado-pescado.jpg',    // mercado de pescado con balanzas
+  marketStall:  '/img/puesto-abarrotes.jpg',   // puesto con cajas y carteles de precio a mano
+  testimonial:  '/img/puesto-frutas.jpg',      // puesto de frutas, Lima
 }
 
 const metrics = [
-  { label: 'Ventas de hoy',    value: 'S/ 2,090',  detail: 'registradas sin tocar un cuaderno' },
-  { label: 'Stock al instante', value: '344',       detail: 'productos — sabes qué tienes y qué falta' },
-  { label: 'Ganancia del mes',  value: 'S/ 18,420', detail: 'sin contarlo a mano ni un sol' },
+  { label: 'Ventas de hoy',     to: 2090,  prefix: 'S/ ', detail: 'registradas sin tocar un cuaderno' },
+  { label: 'Stock al instante', to: 344,   prefix: '',    detail: 'productos — sabes qué tienes y qué falta' },
+  { label: 'Ganancia del mes',  to: 18420, prefix: 'S/ ', detail: 'sin contarlo a mano ni un sol' },
 ]
 
 const steps = [
@@ -150,7 +159,7 @@ export default function Landing() {
 
             <nav className="col-start-2 hidden items-center gap-3 text-sm text-black md:flex md:justify-self-center">
               <button onClick={() => scrollTo('#vendor')} className="bg-black px-4 py-1.5 text-xs font-medium text-white cursor-pointer">Abarrotes</button>
-              <button onClick={() => scrollTo('#vendor')} className="hover:text-black/60 transition-colors cursor-pointer">Bodegas</button>
+              <button onClick={() => scrollTo('#funciones')} className="hover:text-black/60 transition-colors cursor-pointer">Funciones</button>
               <button onClick={() => scrollTo('#vendor')} className="hover:text-black/60 transition-colors cursor-pointer">Mercados</button>
               <button onClick={() => scrollTo('#pricing')} className="hover:text-black/60 transition-colors cursor-pointer">Precios</button>
               <button onClick={() => scrollTo('#support')} className="hover:text-black/60 transition-colors cursor-pointer">Soporte</button>
@@ -168,37 +177,80 @@ export default function Landing() {
 
           <div className="relative z-10 flex flex-1 items-start md:items-center justify-center py-6 md:py-4">
             <div className="mx-auto w-full max-w-4xl text-center">
-              <h1 className="hero-h1 mx-auto max-w-3xl text-[2.2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-5xl lg:text-[4.2rem] pb-3"
-                style={{ fontFamily: 'Lora, serif' }}>
-                Sabe qué tienes, cuánto vendiste y cuánto ganaste — sin un papel.
-              </h1>
-              <p className="hero-sub mx-auto mt-4 max-w-xl text-sm leading-7 text-black/70 sm:text-base">
-                Para el comerciante de abarrotes que no puede perder tiempo entre cuadernos.
-              </p>
-              <div className="hero-btns mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+              <motion.p
+                className="mb-4 inline-flex items-center gap-2 border border-black/12 bg-white/70 px-3.5 py-2 text-[14px] font-semibold text-black backdrop-blur-sm"
+               
+                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#0c61f3]" />
+                Hecho para los mercados del Perú · desde S/ 19.90 al mes
+              </motion.p>
+
+              <motion.h1
+                className="hero-h1 mx-auto max-w-3xl text-[2.2rem] font-semibold leading-[1.05] tracking-tight text-slate-950 sm:text-5xl lg:text-[4.2rem] pb-3"
+                style={{ fontFamily: 'Lora, serif' }}
+                initial={{ opacity: 0, y: 26, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Lo que vendiste, lo que te deben y lo que te falta. Todo en el celular.
+              </motion.h1>
+
+              <motion.p
+                className="hero-sub mx-auto mt-4 max-w-xl text-sm leading-7 text-black/80 sm:text-base"
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Ventas, fiados, stock y proveedores. Sin computadora, sin contador y sin dejar de atender.
+              </motion.p>
+
+              <motion.div
+                className="hero-btns mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3"
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <Link to="/login" className="text-center bg-black px-5 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-black/90 sm:px-7">
                   Empezar gratis
                 </Link>
                 <Link to="/demo" className="text-center border border-black/15 bg-white px-5 py-3 text-sm font-medium text-slate-900 transition hover:-translate-y-0.5 hover:shadow-md sm:px-7">
                   Ver cómo funciona →
                 </Link>
-              </div>
+              </motion.div>
+
               <div className="mx-auto mt-8 grid w-full max-w-4xl gap-4 sm:grid-cols-3">
-                {metrics.map((m) => (
-                  <article key={m.label} className="hero-metric metric-card text-left">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-white">{m.label}</p>
+                {metrics.map((m, i) => (
+                  <motion.article
+                    key={m.label} className="hero-metric metric-card text-left"
+                    initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    transition={{ duration: 0.7, delay: 0.42 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <p className="text-[13px] font-semibold uppercase tracking-[0.26em] text-white">{m.label}</p>
                     <p className="mt-2 text-[2.35rem] font-semibold leading-none text-white sm:text-[2.8rem]"
-                      style={{ fontFamily: 'Lora, serif' }}>{m.value}</p>
+                      style={{ fontFamily: 'Lora, serif' }}>
+                      <CountUp to={m.to} prefix={m.prefix} duration={2.2} />
+                    </p>
                     <p className="mt-2 text-[1rem] leading-6 text-white">{m.detail}</p>
-                  </article>
+                  </motion.article>
                 ))}
               </div>
+
               <div className="hero-markets mt-8">
                 <p className="text-xs text-black">Comerciantes que ya tipearon hoy</p>
-                <div className="mt-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-black">
-                  {['Mercado Central · Lima', 'La Parada · La Victoria', 'Santa Anita', 'Caquetá · San Martín', 'Ventanilla'].map(m => (
-                    <span key={m}>{m}</span>
-                  ))}
+                <div className="marquee-mask mt-2.5">
+                  <div className="marquee-track text-sm text-black/80">
+                    {[0, 1].map(dup => (
+                      <div key={dup} className="marquee-group" aria-hidden={dup === 1}>
+                        {['Mercado Central · Lima', 'La Parada · La Victoria', 'Santa Anita', 'Caquetá · San Martín', 'Ventanilla', 'Mercado de Surquillo', 'Unicachi · Comas'].map(m => (
+                          <span key={m} className="marquee-item">
+                            <span className="mr-6 inline-block h-1 w-1 rounded-full bg-[#0c61f3] align-middle" />
+                            {m}
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -217,10 +269,10 @@ export default function Landing() {
           style={{ background: '#000', fontFamily: 'Lora, serif' }}>
 
           {/* Photo side */}
-          <div className="vendor-img-clip relative overflow-hidden h-64 md:h-auto md:w-[55%] flex-shrink-0">
+          <div className="vendor-img-clip relative overflow-hidden h-64 md:h-auto md:w-[55%] shrink-0">
             <img
               src={IMGS.vendorWoman}
-              alt="Vendedora en mercado"
+              alt="Señora vendiendo frutas en su puesto de mercado"
               className="vendor-img absolute inset-0 w-full h-full object-cover object-center scale-[1.25]"
             />
             <div className="absolute inset-0 bg-black/25" />
@@ -228,59 +280,75 @@ export default function Landing() {
 
           {/* Copy side */}
           <div className="vendor-copy flex flex-1 flex-col justify-center px-5 py-8 md:px-10 md:py-12 lg:px-16">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-white/30 mb-6"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>Para ti</p>
-            <h2 className="text-[2.2rem] sm:text-[3.4rem] lg:text-[4.2rem] font-semibold text-white leading-[0.9] tracking-tight mb-6">
-              Cada día<br />das lo mejor.
-            </h2>
-            <p className="text-[1rem] text-white/50 leading-relaxed max-w-sm mb-4"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>
-              Trabajas desde las 6 de la mañana hasta la noche. Pero al cerrar…
-              ¿sabes cuánto ganaste realmente? ¿Qué se vendió? ¿Qué falta pedir?
-            </p>
-            <p className="text-[1.05rem] text-white leading-relaxed max-w-sm mb-9 font-medium"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>
-              Tipealo te da esas respuestas en segundos.
-            </p>
-            <Link to="/demo"
-              className="self-start bg-white px-7 py-3.5 text-sm font-bold text-black hover:bg-white/90 transition-colors"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>
-              Ver cómo funciona →
-            </Link>
+            <Reveal>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.4em] text-white/65 mb-6"
+               >Para ti</p>
+              <h2 className="text-[2.2rem] sm:text-[3.4rem] lg:text-[4.2rem] font-semibold text-white leading-[0.9] tracking-tight mb-6">
+                Cada día<br />das lo mejor.
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <p className="text-[1rem] text-white/78 leading-relaxed max-w-sm mb-4"
+               >
+                Trabajas desde las 6 de la mañana hasta la noche. Pero al cerrar…
+                ¿sabes cuánto ganaste realmente? ¿Qué se vendió? ¿Quién te quedó debiendo?
+              </p>
+              <p className="text-[1.05rem] text-white leading-relaxed max-w-sm mb-9 font-medium"
+               >
+                Tipealo te da esas respuestas en segundos.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.22}>
+              <Link to="/demo"
+                className="inline-block bg-white px-7 py-3.5 text-sm font-bold text-black hover:bg-white/90 transition-colors"
+               >
+                Ver cómo funciona →
+              </Link>
+            </Reveal>
           </div>
         </section>
+
+        {/* ══════════════════════════════════════
+            FUNCIONES — bento: fiados, ventas, stock, proveedores
+        ══════════════════════════════════════ */}
+        <FeatureBento />
 
         {/* ══════════════════════════════════════
             STEPS — cómo funciona
         ══════════════════════════════════════ */}
         <section className="steps-section min-h-svh flex flex-col justify-center bg-white px-5 py-16 sm:px-8 lg:px-12">
 
-          <div className="steps-heading mb-10 md:mb-14">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-black/30 mb-3"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>Así de simple</p>
+          <Reveal className="steps-heading mb-10 md:mb-14">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.35em] text-black/65 mb-3"
+             >Así de simple</p>
             <h2 className="text-[2rem] sm:text-[3.2rem] lg:text-[3.8rem] font-semibold leading-[0.93] tracking-tight text-slate-950"
               style={{ fontFamily: 'Lora, serif' }}>
               Tres pasos.<br />Todo bajo control.
             </h2>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-            {steps.map((s) => (
-              <div key={s.n} className="step-card flex flex-col overflow-hidden"
-                style={{ background: 'rgba(0,0,0,0.93)' }}>
-                <div className="relative h-44 overflow-hidden">
-                  <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/50" />
-                  <p className="absolute bottom-3 left-4 text-[10px] font-bold tracking-[0.45em] text-white/40"
-                    style={{ fontFamily: 'system-ui, sans-serif' }}>{s.n}</p>
+            {steps.map((s, i) => (
+              <Reveal key={s.n} delay={i * 0.14} wipe className="h-full">
+                <div className="step-card group flex h-full flex-col overflow-hidden"
+                  style={{ background: 'rgba(0,0,0,0.93)' }}>
+                  <div className="relative h-44 overflow-hidden">
+                    <img src={s.img} alt={s.title} loading="lazy" decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-900 ease-out group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-black/50" />
+                    <p className="absolute bottom-3 left-4 text-[12px] font-bold tracking-[0.45em] text-white/72"
+                     >{s.n}</p>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-[1.2rem] font-semibold text-white leading-snug mb-3"
+                      style={{ fontFamily: 'Lora, serif' }}>{s.title}</h3>
+                    <p className="text-[1.05rem] leading-relaxed text-white/75"
+                     >{s.desc}</p>
+                  </div>
                 </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-[1.2rem] font-semibold text-white leading-snug mb-3"
-                    style={{ fontFamily: 'Lora, serif' }}>{s.title}</h3>
-                  <p className="text-[0.9rem] leading-relaxed text-white/45"
-                    style={{ fontFamily: 'system-ui, sans-serif' }}>{s.desc}</p>
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -291,26 +359,26 @@ export default function Landing() {
         <section className="counters-section min-h-svh relative flex items-center justify-center px-5 py-16 sm:px-8 lg:px-12 overflow-hidden">
           {/* Background photo with dark overlay */}
           <div className="absolute inset-0">
-            <img src={IMGS.marketScene} alt="" className="w-full h-full object-cover" />
+            <img src={IMGS.marketScene} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/88" />
           </div>
 
           <div className="relative z-10 w-full max-w-5xl">
-            <p className="text-center text-[11px] font-semibold uppercase tracking-[0.35em] text-white/30 mb-14"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>
+            <p className="text-center text-[13px] font-semibold uppercase tracking-[0.35em] text-white/65 mb-14"
+             >
               En números
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8 text-center">
-              {statCounters.map((s) => (
-                <div key={s.label} className="counter-item">
+              {statCounters.map((s, i) => (
+                <Reveal key={s.label} delay={i * 0.12} className="counter-item">
                   <p className="text-[3.5rem] sm:text-[4.5rem] lg:text-[6rem] font-semibold text-white leading-none"
                     style={{ fontFamily: 'Lora, serif' }}>
-                    <span>{s.val.toLocaleString('es-PE')}</span>
-                    {s.suffix && <span className="text-white/50">{s.suffix}</span>}
+                    <CountUp to={s.val} duration={2.6} />
+                    {s.suffix && <span className="text-white/78">{s.suffix}</span>}
                   </p>
-                  <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/30"
-                    style={{ fontFamily: 'system-ui, sans-serif' }}>{s.label}</p>
-                </div>
+                  <p className="mt-3 text-[13px] font-semibold uppercase tracking-[0.3em] text-white/65"
+                   >{s.label}</p>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -324,19 +392,20 @@ export default function Landing() {
 
             <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
               {/* Photo */}
-              <div className="testi-photo relative w-full max-w-xs lg:max-w-none lg:w-80 h-80 lg:h-[480px] flex-shrink-0 overflow-hidden">
+              <Reveal wipe className="testi-photo relative w-full max-w-xs lg:max-w-none lg:w-80 h-80 lg:h-120 shrink-0 overflow-hidden">
                 <img
-                  src={IMGS.marketFruits}
-                  alt="María López"
+                  src={IMGS.testimonial}
+                  alt="Puesto de frutas en un mercado de Lima"
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              </div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+              </Reveal>
 
               {/* Quote */}
-              <div className="testi-quote flex-1">
-                <p className="text-[10px] font-bold tracking-[0.4em] text-black/25 mb-7"
-                  style={{ fontFamily: 'system-ui, sans-serif' }}>
+              <Reveal delay={0.15} className="testi-quote flex-1">
+                <p className="text-[13px] font-bold tracking-[0.4em] text-black/62 mb-7"
+                 >
                   Caso de éxito
                 </p>
                 <p className="text-[1.6rem] sm:text-[2.6rem] lg:text-[3rem] font-semibold text-slate-950 leading-[1.08] tracking-tight mb-8"
@@ -345,44 +414,60 @@ export default function Landing() {
                 </p>
                 <div className="flex items-center gap-3 mb-10">
                   <div className="w-9 h-9 bg-[#0c61f3] flex items-center justify-center shrink-0">
-                    <span className="text-[11px] font-bold text-white"
-                      style={{ fontFamily: 'system-ui, sans-serif' }}>ML</span>
+                    <span className="text-[13px] font-bold text-white"
+                     >ML</span>
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-black"
-                      style={{ fontFamily: 'system-ui, sans-serif' }}>María López</p>
-                    <p className="text-[11px] text-black/40"
-                      style={{ fontFamily: 'system-ui, sans-serif' }}>La Parada · La Victoria, Lima</p>
+                     >María López</p>
+                    <p className="text-[17px] text-black/80"
+                     >La Parada · La Victoria, Lima</p>
                   </div>
                 </div>
                 <Link to="/demo"
                   className="inline-block border border-black/15 px-7 py-3 text-sm font-medium text-black hover:-translate-y-0.5 hover:shadow-md transition-all"
-                  style={{ fontFamily: 'system-ui, sans-serif' }}>
+                 >
                   Ver el demo →
                 </Link>
-              </div>
+              </Reveal>
             </div>
 
-            {/* Small testimonial cards */}
-            <div className="mini-testis grid grid-cols-1 md:grid-cols-3 gap-4 mt-14">
-              {testimonials.map((t) => (
-                <div key={t.name} className="testi-card p-6 flex flex-col"
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════
+            TESTIMONIOS — tres voces
+        ══════════════════════════════════════ */}
+        <section className="testis-section min-h-svh bg-white flex flex-col justify-center px-5 py-16 sm:px-8 lg:px-12">
+          <div className="w-full max-w-6xl mx-auto">
+
+            <Reveal className="mb-10 md:mb-14">
+              <p className="text-[13px] font-bold uppercase tracking-[0.35em] text-black/65 mb-3">
+                Lo que dicen
+              </p>
+              <h2 className="text-[2rem] sm:text-[3.2rem] lg:text-[3.8rem] font-semibold leading-[0.95] tracking-tight text-slate-950"
+                style={{ fontFamily: 'Lora, serif' }}>
+                Comerciantes<br />como tú.
+              </h2>
+            </Reveal>
+
+            <div className="mini-testis grid grid-cols-1 md:grid-cols-3 gap-4">
+              {testimonials.map((t, i) => (
+                <Reveal key={t.name} delay={i * 0.14} wipe className="testi-card p-7 flex flex-col h-full"
                   style={{ background: 'rgba(0,0,0,0.93)' }}>
-                  <p className="text-[0.9rem] font-medium text-white leading-relaxed flex-1"
-                    style={{ fontFamily: 'Lora, serif' }}>"{t.quote}"</p>
-                  <div className="mt-5 pt-4 border-t border-white/8 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#0c61f3] flex items-center justify-center shrink-0">
-                      <span className="text-[10px] font-bold text-white"
-                        style={{ fontFamily: 'system-ui, sans-serif' }}>{t.initials}</span>
+                  <QuoteIcon />
+                  <p className="mt-4 text-[1.15rem] font-medium text-white leading-relaxed flex-1"
+                    style={{ fontFamily: 'Lora, serif' }}>{t.quote}</p>
+                  <div className="mt-6 pt-5 border-t border-white/15 flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#0c61f3] flex items-center justify-center shrink-0">
+                      <span className="text-[13px] font-bold text-white">{t.initials}</span>
                     </div>
                     <div>
-                      <p className="text-[12px] font-semibold text-white"
-                        style={{ fontFamily: 'system-ui, sans-serif' }}>{t.name}</p>
-                      <p className="text-[10px] text-white/35"
-                        style={{ fontFamily: 'system-ui, sans-serif' }}>{t.place}</p>
+                      <p className="text-[15px] font-semibold text-white">{t.name}</p>
+                      <p className="text-[14px] text-white/68">{t.place}</p>
                     </div>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
 
@@ -395,37 +480,37 @@ export default function Landing() {
         <section id="pricing" className="pricing-section min-h-svh flex flex-col justify-center px-5 py-16 sm:px-8 lg:px-12"
           style={{ background: '#0a0a0a' }}>
 
-          <div className="price-heading mb-10 md:mb-14 text-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-white/30 mb-3"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>Precios</p>
+          <Reveal className="price-heading mb-10 md:mb-14 text-center">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.35em] text-white/65 mb-3"
+             >Precios</p>
             <h2 className="text-[2rem] sm:text-[3.2rem] lg:text-[3.8rem] font-semibold leading-[0.93] tracking-tight text-white"
               style={{ fontFamily: 'Lora, serif' }}>Sin sorpresas.</h2>
-          </div>
+            <p className="mt-4 text-[0.95rem] text-white/72">
+              Menos de lo que cuesta un menú a la semana.
+            </p>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto w-full">
-            {pricing.map((p) => (
-              <div key={p.name} className="price-card flex flex-col"
+            {pricing.map((p, i) => (
+              <Reveal key={p.name} delay={i * 0.14} wipe className="price-card flex flex-col h-full"
                 style={{ background: p.accent ? '#0c61f3' : 'rgba(255,255,255,0.05)' }}>
                 <div className="p-7 md:p-9 flex-1" style={{ fontFamily: 'Lora, serif' }}>
                   <div className="flex items-baseline justify-between mb-6">
-                    <p className="text-[11px] font-bold tracking-[0.35em] text-white/60"
-                      style={{ fontFamily: 'system-ui, sans-serif' }}>{p.name.toUpperCase()}</p>
+                    <p className="text-[13px] font-bold tracking-[0.35em] text-white/80"
+                     >{p.name.toUpperCase()}</p>
                     {p.accent && (
-                      <span className="text-[10px] font-bold tracking-wide bg-white/20 text-white px-2 py-0.5"
-                        style={{ fontFamily: 'system-ui, sans-serif' }}>POPULAR</span>
+                      <span className="text-[12px] font-bold tracking-wide bg-white/20 text-white px-2 py-0.5"
+                       >POPULAR</span>
                     )}
                   </div>
                   <p className="text-[3rem] font-semibold text-white leading-none">{p.price}</p>
-                  <p className="text-[11px] text-white/50 mt-1.5 mb-7"
-                    style={{ fontFamily: 'system-ui, sans-serif' }}>{p.priceSub}</p>
+                  <p className="text-[17px] text-white/78 mt-1.5 mb-7"
+                   >{p.priceSub}</p>
                   <ul className="space-y-2.5">
                     {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5">
-                        <svg className="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                          <path d="M2.5 7l3 3 6-6" stroke={p.accent ? 'white' : 'rgba(255,255,255,0.5)'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                        <span className="text-[0.85rem] text-white/70"
-                          style={{ fontFamily: 'system-ui, sans-serif' }}>{f}</span>
+                      <li key={f} className="flex items-start gap-3">
+                        <CheckIcon size={17} className={`shrink-0 mt-1 ${p.accent ? 'text-white' : 'text-[#5b9fff]'}`} />
+                        <span className="text-[1.08rem] leading-snug text-white/85">{f}</span>
                       </li>
                     ))}
                   </ul>
@@ -434,14 +519,13 @@ export default function Landing() {
                   <Link to={p.ctaTo}
                     className="block w-full py-3.5 text-center text-sm font-bold transition-all"
                     style={{
-                      fontFamily: 'system-ui, sans-serif',
                       background: p.accent ? 'white' : 'rgba(255,255,255,0.1)',
                       color: p.accent ? '#0c61f3' : 'white',
                     }}>
                     {p.cta}
                   </Link>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -449,76 +533,113 @@ export default function Landing() {
         {/* ══════════════════════════════════════
             SOPORTE
         ══════════════════════════════════════ */}
-        <section id="support" className="support-section min-h-svh relative flex items-center overflow-hidden px-5 sm:px-8 lg:px-12">
-          <div className="pointer-events-none absolute inset-0">
+        <section id="support" className="support-section min-h-svh relative flex items-center overflow-hidden px-5 py-16 sm:px-8 lg:px-12">
+          {/* fondo cálido: crema y ámbar en vez del azul frío */}
+          <div className="pointer-events-none absolute inset-0" style={{ background: '#f7efe2' }}>
             <Grainient
-              color1="#000000" color2="#0c61f3" color3="#000000"
-              timeSpeed={0.18} colorBalance={0} warpStrength={0.7}
-              warpFrequency={4} warpSpeed={1.2} warpAmplitude={35}
-              blendAngle={0} blendSoftness={0.05} rotationAmount={280}
-              noiseScale={2} grainAmount={0.12} grainScale={2}
-              grainAnimated={false} contrast={2.2} gamma={1} saturation={0.7}
-              centerX={0} centerY={0} zoom={0.9}
+              color1="#f9f3e8" color2="#f0b45c" color3="#f9f3e8"
+              timeSpeed={0.16} colorBalance={0.1} warpStrength={0.9}
+              warpFrequency={3} warpSpeed={1} warpAmplitude={45}
+              blendAngle={15} blendSoftness={0.2} rotationAmount={260}
+              noiseScale={1.8} grainAmount={0.1} grainScale={2}
+              grainAnimated={false} contrast={1.15} gamma={1} saturation={1.1}
+              centerX={0.25} centerY={-0.1} zoom={0.85}
             />
           </div>
-          <div className="relative z-10 support-content max-w-2xl py-20">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-white/30 mb-5"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>Soporte</p>
-            <h2 className="text-[2.2rem] sm:text-[3.8rem] lg:text-[5rem] font-semibold leading-[0.92] tracking-tight text-white mb-6"
-              style={{ fontFamily: 'Lora, serif' }}>
-              ¿Tienes<br />alguna duda?
-            </h2>
-            <p className="text-[1rem] text-white/40 mb-9 max-w-md leading-relaxed"
-              style={{ fontFamily: 'system-ui, sans-serif' }}>
-              Somos un equipo pequeño que responde rápido. Si algo no funciona o tienes una pregunta, escríbenos y te ayudamos hoy.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a href="https://wa.me/51987654321" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2.5 bg-[#25D366] px-7 py-3.5 text-sm font-bold text-white hover:bg-[#20bc5a] transition-colors"
-                style={{ fontFamily: 'system-ui, sans-serif' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                Escribir por WhatsApp
-              </a>
-              <a href="mailto:hola@tipealo.pe"
-                className="border border-white/20 px-7 py-3.5 text-sm font-medium text-white/60 hover:text-white hover:border-white/40 transition-all"
-                style={{ fontFamily: 'system-ui, sans-serif' }}>
-                hola@tipealo.pe
-              </a>
-            </div>
+
+          <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+
+            {/* Mensaje */}
+            <Reveal>
+              <p className="mb-5 text-[13px] font-bold uppercase tracking-[0.35em] text-[#8a5a1c]">
+                Estamos para ayudarte
+              </p>
+              <h2 className="mb-7 text-[2.4rem] font-semibold leading-[0.95] tracking-tight text-[#231708] sm:text-[3.6rem] lg:text-[4.4rem]"
+                style={{ fontFamily: 'Lora, serif' }}>
+                ¿Necesitas ayuda?<br />Te contesta<br />una persona.
+              </h2>
+              <p className="max-w-lg text-[1.25rem] leading-[1.7] text-[#3d2c16]">
+                Nada de robots ni menús de opciones. Escríbenos por WhatsApp y
+                te respondemos el mismo día, en palabras simples. Si prefieres,
+                te llamamos nosotros.
+              </p>
+            </Reveal>
+
+            {/* Tarjeta de contacto */}
+            <Reveal delay={0.15}>
+              <div className="border-2 border-[#231708]/12 bg-white/85 p-7 backdrop-blur-sm sm:p-9">
+
+                <a
+                  href="https://wa.me/51907425900"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-3 bg-[#1faa53] px-6 py-5 text-[1.2rem] font-bold text-white transition-colors hover:bg-[#178a43]"
+                >
+                  <WhatsAppIcon size={26} />
+                  Escríbenos por WhatsApp
+                </a>
+
+                <a
+                  href="tel:+51907425900"
+                  className="mt-3 flex w-full items-center justify-center gap-3 border-2 border-[#231708] px-6 py-5 text-[1.2rem] font-bold text-[#231708] transition-colors hover:bg-[#231708] hover:text-white"
+                >
+                  <PhoneIcon size={24} strokeWidth={1.9} />
+                  907 425 900
+                </a>
+
+                <ul className="mt-8 space-y-5 border-t-2 border-[#231708]/10 pt-7">
+                  <li className="flex items-start gap-4">
+                    <ClockIcon size={26} className="mt-0.5 shrink-0 text-[#8a5a1c]" />
+                    <span className="text-[1.08rem] leading-snug text-[#3d2c16]">
+                      Lunes a sábado, de <strong className="font-semibold text-[#231708]">6 a.m. a 8 p.m.</strong>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <ChatIcon size={26} className="mt-0.5 shrink-0 text-[#8a5a1c]" />
+                    <span className="text-[1.08rem] leading-snug text-[#3d2c16]">
+                      Te explicamos paso a paso, <strong className="font-semibold text-[#231708]">sin términos raros</strong>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <MailIcon size={26} className="mt-0.5 shrink-0 text-[#8a5a1c]" />
+                    <a href="mailto:hola@tipealo.pe"
+                      className="text-[1.08rem] leading-snug text-[#3d2c16] underline underline-offset-4 hover:text-[#231708]">
+                      hola@tipealo.pe
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </Reveal>
+
           </div>
         </section>
 
         {/* ══════════════════════════════════════
             FOOTER
         ══════════════════════════════════════ */}
-        <footer className="footer-section bg-black px-5 pt-14 sm:px-8 lg:px-12"
-          style={{ fontFamily: 'system-ui, sans-serif' }}>
+        <footer className="footer-section min-h-svh flex flex-col justify-center bg-black px-5 pt-14 sm:px-8 lg:px-12">
 
-          <div className="footer-top grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-10 pb-12 border-b border-white/8">
+          <div className="footer-top grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-10 pb-12 border-b border-white/15">
             <div className="col-span-2 md:col-span-1">
               <p className="text-lg font-extrabold tracking-[0.18em] text-white mb-3"
                 style={{ fontFamily: 'Lora, serif' }}>TIPEALO</p>
-              <p className="text-[12px] text-white/35 leading-relaxed max-w-[160px] mb-5">
+              <p className="text-[14px] text-white/68 leading-relaxed max-w-40 mb-5">
                 Para el comerciante que no puede perder tiempo.
               </p>
               <a href="https://www.linkedin.com/in/jair-quispe/" target="_blank" rel="noopener noreferrer"
-                className="inline-flex w-8 h-8 items-center justify-center border border-white/15 text-white/40 hover:text-white hover:border-white/30 transition-all">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-                  <circle cx="4" cy="4" r="2"/>
-                </svg>
+                aria-label="LinkedIn de Jair Quispe"
+                className="inline-flex w-10 h-10 items-center justify-center border border-white/25 text-white/72 hover:text-white hover:border-white/50 transition-all">
+                <LinkedInIcon size={16} />
               </a>
             </div>
 
             {footerLinks.map((group) => (
               <div key={group.heading}>
-                <p className="text-[10px] font-bold tracking-[0.35em] text-white/30 mb-4 uppercase">{group.heading}</p>
+                <p className="text-[13px] font-bold tracking-[0.35em] text-white/65 mb-4 uppercase">{group.heading}</p>
                 <ul className="space-y-2.5">
                   {group.links.map((l) => (
                     <li key={l}>
-                      <a href="#" className="text-[13px] text-white/45 hover:text-white transition-colors">{l}</a>
+                      <a href="#" className="text-[17px] text-white/75 hover:text-white transition-colors">{l}</a>
                     </li>
                   ))}
                 </ul>
@@ -527,8 +648,11 @@ export default function Landing() {
           </div>
 
           <div className="py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <p className="text-[11px] text-white/25">© 2025 Tipealo. Todos los derechos reservados.</p>
-            <p className="text-[11px] text-white/20">Hecho para los mercados del Perú 🇵🇪</p>
+            <p className="text-[17px] text-white/62">© 2025 Tipealo. Todos los derechos reservados.</p>
+            <p className="flex items-center gap-2.5 text-[17px] text-white/80">
+              <PeruMarkIcon size={14} className="shrink-0 text-white/60" />
+              Hecho para los mercados del Perú
+            </p>
           </div>
 
           {/* Big brand name */}
